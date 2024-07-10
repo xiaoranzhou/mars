@@ -74,7 +74,8 @@
   <link href="css/bs5-intro-tour.css" rel="stylesheet" />
   <script src="js/bs5-intro-tour.js" type="text/javascript" charset="utf-8"></script>
   <!--script src="js/example.js" type="text/javascript" charset="utf-8"></script-->
-  <script src="js/test_json.js"></script>
+  <script src="js/test_json_dataplant_no_investigation.js"></script>
+  <script src="js/test_json_datahub.js"></script>
 </head>
 </head>
 
@@ -173,8 +174,10 @@
 </div>
   <div class="center">
 
-    Test BioSamples submission, click <a href="#" onclick="bstest()">here</a> <br>
-    Test ENA submission, click <a href="#" onclick="enatest()">here</a>
+    Test BioSamples submission use DataPLANT JSON, click <a href="#" onclick="bstest(trim_dataplant(dataplant_json))">here</a> <br>
+    Test BioSamples submission use DataHub JSON, click <a href="#" onclick="bstest(datahub_json)">here</a> <br>
+    Test ENA submission use DataPLANT JSON, click <a href="#" onclick="enatest(dataplant_json)">here</a> <br>
+    Test ENA submission use DataHub JSON, click <a href="#" onclick="enatest(datahub_json)">here</a>
     <br>
     <input class="btn btn-primary d-inline d-none" type="file" id="input_json" name="json" multiple />
     <input style="display:none" type="file" id="input_xlsx" name="xlsx" multiple />
@@ -223,7 +226,7 @@
         var result = JSON.parse(reader.result); // Parse the result into an object 
         //console.log("reader.result is : "+reader.result);
         input_json = {"investigation": result};
-        testJSON = {"investigation": result};
+
         //console.log("result is : " + result);
 
       });
@@ -324,7 +327,7 @@
     }
 
 
-    function getToken(){
+    function getToken(testJSON){
 
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
@@ -379,17 +382,17 @@
 
     }
 
-    function bstest(){
+    function bstest(testJSON){
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
       document.getElementById("formSubmit").click();
-      getToken();
+      getToken(testJSON);
       
       
 
     }
 
-    function enatest(){
+    function enatest(testJSON){
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
@@ -425,6 +428,21 @@
         });
 
 };
+
+function trim_dataplant(input){
+
+  const invinput = {"investigation": input} ;
+  const jsText = JSON.stringify(invinput);
+  const replacedText1 = jsText.replaceAll(/(\"value\"\:)(\"\w+\")/gm , '$1{ "@id": "", "annotationValue" :$2, "termAccession":"","termSource":"" }') 
+  const replacedText2 = replacedText1.replaceAll(/(\"value\"\:)(\d+(\d+|[.])\d+)[,]/gm , '$1{ "@id": "", "annotationValue" :"$2", "termAccession":"","termSource":"" },')
+
+  const replacedText3 = replacedText2.replaceAll(/(\"value\"\:)(\d+)/gm , '$1{ "@id": "", "annotationValue" :"$2", "termAccession":"","termSource":"" }')
+  
+  const replacedText4 = replacedText3.replaceAll(/(\#MaterialAttribute\/)(OBI\:0100026)/gm , '$1organism/$2')
+  let finalJSON = JSON.parse(replacedText4);
+  finalJSON["investigation"]["studies"] = [finalJSON["investigation"]["studies"][0]]
+  return finalJSON;
+}
 
 
 function bsSubmit( json){
@@ -609,7 +627,7 @@ function bsSubmit( json){
           <br>
           <span ></span> Submission Status<br>
           
-          <table id="infoTable" class="table table-bordered table-hover" style="width: 100%;">
+          <table id="infoTable" class="table table-bordered table-hover" style="table-layout:auto; width: 100%;">
             <thead>
               <tr>
                 <th scope="col">Repositories</th>
@@ -623,14 +641,14 @@ function bsSubmit( json){
                 <th scope="row">Token</th>
                 <td id="tokenStatus">not asked</td>
                 <td > <div style="overflow-wrap: break-all;
-                  word-wrap: break-all;" id="tokenText"></div></td>
+                  word-break: break-all;" id="tokenText"></div></td>
                 <td >...</td>
               </tr>
               <tr>
                 <th scope="row">ENA</th>
                 <td id="enaStatus">not asked</td>
                 <td ><div style="overflow-wrap: break-all;
-                  word-wrap: break-all;" id="enaText"></div></td>
+                  word-break: break-all;" id="enaText"></div></td>
                 <td >...</td>
               </tr>
               <tr>
