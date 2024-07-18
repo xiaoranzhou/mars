@@ -79,7 +79,8 @@
           "@id" : "#people/5"
         } ],
         "studyDesignDescriptors" : [ ],
-        "characteristicCategories" : [ {
+        "characteristicCategories" : [ 
+          {
           "characteristicType" : {
             "annotationValue" : "Title",
             "termAccession" : "",
@@ -172,7 +173,8 @@
           "@id" : "#characteristic_category/accession_329"
         } ],
         "materials" : {
-          "sources" : [ {
+          "sources" : [
+             {
             "name" : "plant 1",
             "characteristics" : [ {
               "category" : {
@@ -366,7 +368,8 @@
             } ],
             "@id" : "#source/330"
           } ],
-          "samples" : [ {
+          "samples" : [ 
+            {
             "name" : "leaf 1",
             "derivesFrom" : [ {
               "@id" : "#source/330"
@@ -397,7 +400,8 @@
             "@id" : "#sample/331"
           } ]
         },
-        "protocols" : [ {
+        "protocols" : [ 
+          {
           "name" : "sample collection",
           "protocolType" : {
             "annotationValue" : "sample collection",
@@ -552,7 +556,8 @@
           } ],
           "@id" : "#process/sample_collection/331"
         } ],
-        "assays" : [ {
+        "assays" : [ 
+          {
           "filename" : "a_assays.txt",
           "measurementType" : {
             "annotationValue" : "",
@@ -565,7 +570,8 @@
             "termAccession" : ""
           },
           "technologyPlatform" : "",
-          "characteristicCategories" : [ {
+          "characteristicCategories" : [ 
+            {
             "characteristicType" : {
               "annotationValue" : "Title",
               "termAccession" : "",
@@ -595,21 +601,25 @@
             "@id" : "#characteristic_category/accession_360"
           } ],
           "materials" : {
-            "samples" : [ {
+            "samples" : [
+              {
               "@id" : "#sample/331"
             } ],
-            "otherMaterials" : [ {
+            "otherMaterials" : [ 
+              {
               "name" : "extract 1",
               "type" : "Extract Name",
               "characteristics" : [ ],
-              "derivesFrom" : [ {
+              "derivesFrom" : [ 
+                {
                 "@id" : "#sample/331"
               } ],
               "@id" : "#other_material/332"
             }, {
               "name" : "library 1",
               "type" : "library name",
-              "characteristics" : [ {
+              "characteristics" : [
+                 {
                 "category" : {
                   "@id" : "#characteristic_category/Title_350"
                 },
@@ -672,7 +682,8 @@
               "@id" : "#other_material/333"
             } ]
           },
-          "processSequence" : [ {
+          "processSequence" : [ 
+            {
             "name" : "",
             "executesProtocol" : {
               "@id" : "#protocol/19_18"
@@ -698,7 +709,8 @@
             "executesProtocol" : {
               "@id" : "#protocol/20_20"
             },
-            "parameterValues" : [ {
+            "parameterValues" : [ 
+              {
               "category" : {
                 "@id" : "#parameter/349"
               },
