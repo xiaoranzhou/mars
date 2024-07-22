@@ -77,6 +77,7 @@
   <script src="js/test_json_dataplant_no_investigation.js"></script>
   <script src="js/test_json_datahub.js"></script>
   <script src="js/dataplant_biosamples_returned_json.js"></script>
+  <script src="js/datahub_biosamples_returned_json.js"></script>
   
 </head>
 </head>
@@ -178,8 +179,8 @@
 
     Test BioSamples submission use DataPLANT JSON, click <a href="#" onclick="bstest(trim_dataplant(dataplant_json))">here</a> <br>
     Test BioSamples submission use DataHub JSON, click <a href="#" onclick="bstest(datahub_json)">here</a> <br>
-    Test ENA submission use DataPLANT JSON, click <a href="#" onclick="enatest(dataplant_json)">here</a> <br>
-    Test ENA submission use DataHub JSON, click <a href="#" onclick="enatest(datahub_json)">here</a>
+    Test ENA submission use DataPLANT JSON, click <a href="#" onclick="enatest(enaModify(dataplant_biosamples_returned_json))">here</a> <br>
+    Test ENA submission use DataHub JSON, click <a href="#" onclick="enatest(datahub_biosamples_returned_json)">here</a>
     <br>
     <input class="btn btn-primary d-inline d-none" type="file" id="input_json" name="json" multiple />
     <input style="display:none" type="file" id="input_xlsx" name="xlsx" multiple />
@@ -332,7 +333,7 @@
     }
 
 
-    function getToken(testJSON){
+    function bstest(testJSON){
 
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
@@ -369,33 +370,33 @@
 
     }
 
-    function tokenButton(){
+  //   function tokenButton(){
 
-      document.getElementById('authForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent the default form submission
+  //     document.getElementById('authForm').addEventListener('submit', function(event) {
+  //     event.preventDefault(); // Prevent the default form submission
       
-      // Get the username and password from the input fields
+  //     // Get the username and password from the input fields
 
-    });
-  }
+  //   });
+  // }
 
 
    
-    window.onload = (event) =>{
+  //   window.onload = (event) =>{
 
-      tokenButton();
+  //     tokenButton();
 
-    }
+  //   }
 
-    function bstest(testJSON){
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      document.getElementById("formSubmit").click();
-      getToken(testJSON);
+    // function bstest(testJSON){
+    //   const username = document.getElementById('username').value;
+    //   const password = document.getElementById('password').value;
+      
+    //   getToken(testJSON);
       
       
 
-    }
+    // }
 
     function enatest(testJSON){
       const username = document.getElementById('username').value;
@@ -648,7 +649,7 @@ function bsSubmit( json){
                 "@id" : "#parameter/354"
               },
               "value" : {
-                "annotationValue" : "RT-PCR",
+                "annotationValue" : "RNA-seq",
                 "termSource" : "",
                 "termAccession" : ""
               },
