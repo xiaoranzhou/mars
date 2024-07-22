@@ -191,7 +191,7 @@
 
       <input type="file" id="import" multiple>
     </div><br>
-    <button class="btn btn-primary" onclick='document.getElementById("formSubmit").click();checkInput()' style="display:inline" data-bs-toggle="modal" data-bs-target="#cModal"
+    <button class="btn btn-primary" style="display:inline" data-bs-toggle="modal" data-bs-target="#cModal"
       id="cModalButton"> Start Submissions </button>
     <div class="d-flex justify-content-center d-none" id="waiting">
       <div class="spinner-grow btn-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -334,7 +334,7 @@
 
 
     function bstest(testJSON){
-
+      document.getElementById("loadingModalBtn").click();
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
       
@@ -382,11 +382,11 @@
 
 
    
-  //   window.onload = (event) =>{
+    window.onload = (event) =>{
 
-  //     tokenButton();
+      //tokenButton();
 
-  //   }
+    }
 
     // function bstest(testJSON){
     //   const username = document.getElementById('username').value;
@@ -399,6 +399,7 @@
     // }
 
     function enatest(testJSON){
+      document.getElementById("loadingModalBtn").click();
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
@@ -894,7 +895,36 @@ function bsSubmit( json){
         </div>
       </div>
     </div>
+    <!-- Modal -->
+    
   </div>
+
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary d-none" id="loadingModalBtn" data-bs-toggle="modal" data-bs-target="#loadingModal">
+  Launch loading modal
+</button>
+<div class="modal fade" id="loadingModal"  backdrop="true" aria-labelledby="#loadingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="loadingModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 
 </html>
