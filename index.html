@@ -125,6 +125,14 @@
       </div>
 
       <div class="btn-group d-none g-0 d-md-block dropdown col-auto">
+
+        <button type="button" onclick="location.href=location.href.split('#')[0]+'#a2j'" class="btn btn-nav" id="a2jNavBtn">
+          ARC2JSON &nbsp;
+          </button>
+
+          <button type="button" onclick="location.href=location.href.split('#')[0]+'#submit'" class="btn  btn-nav" id="submitNavBtn">
+            submit &nbsp;
+            </button>
         <button type="button" class="btn border-0 rounded-0 g-0 btn-nav" data-bs-toggle="dropdown" aria-expanded="false"
           id="conversion_tools">
           Menu &nbsp;
@@ -145,6 +153,7 @@
           </li>
 
         </ul>
+
       </div>
 
 
@@ -153,9 +162,9 @@
     </div>
   </div>
 
- 
+  <div name="tab" class="col-12" id="submissionTab">
   <h1 class="center">MARS: Multi-omics Adapter for Repository Submissions </h1>
-  <div class="">
+  
     
     <form id="authForm" class="row justify-content-center">
       <div class="mb-3 col-2">
@@ -178,17 +187,17 @@
       
     </div>
     </form>
-  </div>
-</div>
+  
+
   <div class="center">
 
-    Test BioSamples submission use DataPLANT JSON, click <a href="#" onclick="bstest(trim_dataplant(dataplant_json))">here</a> <br>
-    Test BioSamples submission use DataHub JSON, click <a href="#" onclick="bstest(datahub_json)">here</a> <br>
-    Test ENA submission use DataPLANT JSON, click <a href="#" onclick="enatest(enaModify(dataplant_biosamples_returned_json))">here</a> <br>
-    Test ENA submission use DataHub JSON, click <a href="#" onclick="enatest(datahub_biosamples_returned_json)">here</a>
+    DataPLANT test JSON -> BioSamples, click <a href="#" onclick="bstest(trim_dataplant(dataplant_json))">here</a> <br>
+    DataHub test JSON   -> BioSamples, click <a href="#" onclick="bstest(datahub_json)">here</a> <br>
+    DataPLANT test JSON -> ENA, click <a href="#" onclick="enatest(enaModify(dataplant_biosamples_returned_json))">here</a> <br>
+    DataHub test JSON   -> ENA, click <a href="#" onclick="enatest(datahub_biosamples_returned_json)">here</a>
     <br>
     <input class="btn btn-primary d-inline d-none" type="file" id="input_json" name="json" multiple />
-    <input style="display:none" type="file" id="input_xlsx" name="xlsx" multiple />
+    
 
     <div class=" area uploadarea " id="importArea" ondragenter="this.className='area uploadarea dragging'"
       ondrop=";DragAndDrop(event)" style="margin:auto; height:30vh; width:50vw">
@@ -207,10 +216,70 @@
     <div style="margin:auto;" id="xml_output">
     </div>
   </div>
+
+</div>
+
+<div name="tab" class=" col-12" id="ARC2JSONTab">
+<form class="row g-3 align-items-center">
+  <div class="row g-3 align-items-center">
+    <div class="col-3 text-end">
+      <label for="repoURL" class="col-form-label">ARC Url</label>
+    </div>
+    <div class="col-3">
+      <input type="text" id="repoURL" value='https://git.nfdi4plants.org/brilator/Facultative-CAM-in-Talinum.git' class="form-control" aria-describedby="repoURLLabel" required>
+    </div>
+    <div class="col-3">
+      <span id="repoURLLabel" class="form-text">
+        ARC Repository Url
+      </span>
+    </div>
+  </div>
+
+
+  <div class="row g-3 align-items-center">
+    <div class="col-3 text-end">
+      <label for="gitusername" class="col-form-label">Username</label>
+    </div>
+    <div class="col-3">
+      <input type="Gitusername" id="gitusername" class="form-control" aria-describedby="UsernameHelpInline">
+    </div>
+    <div class="col-3">
+      <span id="UsernameHelpInline" class="form-text">
+        The username or of DataHUB
+      </span>
+    </div>
+  </div>
+  
+  <div class="row g-3 align-items-center">
+    <div class="col-3 text-end">
+      <label for="gitpassword" class="col-form-label">Password</label>
+    </div>
+    <div class="col-3">
+      <input type="Gitpassword" id="gitpassword" class="form-control" aria-describedby="passwordHelpInline">
+    </div>
+    <div class="col-3">
+      <span id="passwordHelpInline" class="form-text">
+        Must be 8-20 characters long.
+      </span>
+    </div>
+  </div>
+  <div class="col-3 m-auto align-items-center">
+    <br>
+    <button class="btn btn-primary" onclick="cloneARC()" type="submit">Download ARC</button>
+  </div>
+</form>
+
+  <div id="ARCInfo" class="col-6 m-auto">
+
+  </div>
+</div>
   <script type="text/javascript">
     var v_list, csv_content, cleanend_global, token , enaReturn = 0, biosamplesReturn= 0;
     var input_json = 0, input_xlsx;
     var log_backup = console.log;
+    var fs = FS.fs;
+    window.dir = "/arc"
+        FS.mkdirSync(dir);
     var log_messages = [];
     var steps = [{
       title: "Converter and validators",
@@ -218,6 +287,53 @@
       //
     }
     ];
+
+
+
+    //fetch('https://git.nfdi4plants.org/api/v4/projects')
+      // .then(data => {
+      // return data.json();
+      // })
+      // .then(post => {
+      // console.log(post);
+      // });
+    async function cloneARC(){
+      const url = document.getElementById("repoURL").value;
+      const username = gitusername;
+      const password = gitpassword;
+      document.getElementById("loadingModalBtn").click();
+        
+        await git.clone({
+        fs,
+        http,
+        dir,
+        username: gitusername,
+        password: gitpassword,
+        corsProxy: 'https://cors.isomorphic-git.org',
+        url: url,
+        ref: 'main',
+        singleBranch: true,
+        depth: 20,
+        force: true
+          })
+          document.getElementById("loadingModalBtn").click();
+          const ele = document.getElementById("ARCInfo");
+          //ele.innerHTML= "Downloading ARC successful, files are "+ (FS.readdirSync(dir));
+          const dec = new TextDecoder;
+          var jsonText;
+          await ARC2JSON("arc", "rna.json")
+            jsonText=dec.decode(FS.readFileSync("rna.json"));
+          
+          
+          ele.innerHTML += jsonText;
+
+           // Now it should not be empty...
+       
+
+    }
+    
+    // ARC2JSON("arc", "rna.json")
+
 
     var tour = new Tour(steps); // initialize the guided tour
     //tour.show();
@@ -241,7 +357,35 @@
 
       reader.readAsText(ele.files[0]); // Read the uploaded file
     }
+    function softRoute(){
+          const urlRoute = window.location.href.split("#");
+          const para = urlRoute.slice(-1)[0];
+			    switch (para) {
+                    case "submit":
+                        document.querySelectorAll('div[name="tab"]').forEach((e)=> 
+                        {
+                            if (e.id == "submissionTab")
+                              {e.classList.remove("d-none") }
+                            else
+                              {e.classList.add("d-none")}}
+                          
+                        )
+                          break;
+                          case "a2j":
+                          document.querySelectorAll('div[name="tab"]').forEach((e)=> 
+                          {
+                            if (e.id == "ARC2JSONTab")
+                              {e.classList.remove("d-none") }
+                            else
+                              {e.classList.add("d-none")}}
+                          
+                        )
+                          break;
+                          default:
 
+                }
+                
+        }
     function checkInput(){
       try{
         const username = document.getElementById('username').value;
@@ -305,23 +449,8 @@
       return list;
     }
 
-  //   var fs = FS.fs;
-  //     window.dir = "/arc"
-  //     FS.mkdirSync("/arc");
-  //     await git.clone({
-  //     fs,
-  //     http,
-  //     dir,
-  //     corsProxy: 'https://cors.isomorphic-git.org',
-  //     url: 'https://git.nfdi4plants.org/brilator/Facultative-CAM-in-Talinum.git',
-  //     ref: 'main',
-  //     singleBranch: true,
-  //     depth: 20
-  //   });
+  //   
   
-  // // Now it should not be empty...
-  // await FS.readdirSync(dir);
-  // ARC2JSON("arc", "rna.json")
 
 
     function handleFiles1() {
@@ -401,14 +530,11 @@
   //   });
   // }
 
-
+  
+  window.addEventListener("load", (event) => {
+    softRoute();
+});
    
-    window.onload = (event) =>{
-
-      //tokenButton();
-
-    }
-
     // function bstest(testJSON){
     //   const username = document.getElementById('username').value;
     //   const password = document.getElementById('password').value;
@@ -721,6 +847,9 @@ function bsSubmit( json){
           }
           return assayProcessSequence;
     }
+
+
+
   </script>
   <script type="module">
     //import { EnaBroker } from "./js/broker/ena/ena.broker.js";
@@ -746,6 +875,16 @@ function bsSubmit( json){
       }
     }
 
+
+    addEventListener("hashchange", (event) => {
+
+      if (true){
+        softRoute();
+      }
+
+      });
+
+      
     function submitAll(endRepo) {
       let repositories = [];
       for (const [index, element] of endRepo.entries()) {
@@ -928,7 +1067,7 @@ function bsSubmit( json){
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="loadingModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="loadingModalLabel">Processing</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
