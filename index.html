@@ -127,11 +127,11 @@
       <div class="btn-group d-none g-0 d-md-block dropdown col-auto">
 
         <button type="button" onclick="location.href=location.href.split('#')[0]+'#a2j'" class="btn btn-nav" id="a2jNavBtn">
-          ARC2JSON &nbsp;
+          ARC2ISA&nbsp;
           </button>
 
           <button type="button" onclick="location.href=location.href.split('#')[0]+'#submit'" class="btn  btn-nav" id="submitNavBtn">
-            submit &nbsp;
+            MARS Submit &nbsp;
             </button>
         <button type="button" class="btn border-0 rounded-0 g-0 btn-nav" data-bs-toggle="dropdown" aria-expanded="false"
           id="conversion_tools">
@@ -223,20 +223,20 @@
 <form class="row g-3 align-items-center">
   <div class="row g-3 align-items-center">
     <div class="col-3 text-end">
-      <label for="repoURL" class="col-form-label">ARC Url</label>
+      <label for="repoURL" class="col-form-label">ARC gitlab URL</label>
     </div>
     <div class="col-3">
       <input type="text" id="repoURL" value='https://git.nfdi4plants.org/brilator/Facultative-CAM-in-Talinum.git' class="form-control" aria-describedby="repoURLLabel" required>
     </div>
     <div class="col-3">
       <span id="repoURLLabel" class="form-text">
-        ARC Repository Url
+        ARC Repository URL can be copied from the "Clone with HTTPS" section under code. It should start with "https://" and end with ".git"
       </span>
     </div>
   </div>
 
 
-  <div class="row g-3 align-items-center">
+  <div class="row g-3 align-items-center d-none">
     <div class="col-3 text-end">
       <label for="gitusername" class="col-form-label">Username</label>
     </div>
@@ -252,20 +252,20 @@
   
   <div class="row g-3 align-items-center">
     <div class="col-3 text-end">
-      <label for="gitpassword" class="col-form-label">Password</label>
+      <label for="gitpassword" class="col-form-label">Access Token</label>
     </div>
     <div class="col-3">
-      <input type="Gitpassword" id="gitpassword" class="form-control" aria-describedby="passwordHelpInline">
+      <input type="Gitpassword" placeholder="can be left empty" id="gitpassword" class="form-control" aria-describedby="passwordHelpInline">
     </div>
     <div class="col-3">
       <span id="passwordHelpInline" class="form-text">
-        Must be 8-20 characters long.
+        The personal access token can be left empty if the repository is publicly accessible.
       </span>
     </div>
   </div>
   <div class="col-3 m-auto align-items-center">
     <br>
-    <button class="btn btn-primary" onclick="cloneARC()" type="submit">Download ARC</button>
+    <button class="btn btn-primary" onclick="cloneARC()" type="submit">Export ARC-JSON</button>
   </div>
 </form>
 
@@ -298,17 +298,25 @@
       // console.log(post);
       // });
     async function cloneARC(){
-      const url = document.getElementById("repoURL").value;
-      const username = gitusername;
-      const password = gitpassword;
+      var url;
+      const token = document.getElementById("gitpassword").value;
+      if (!token){
+        url = document.getElementById("repoURL").value;
+        console.log(url)
+      }else{
+        [begin, end] = document.getElementById("repoURL").value.split("//")
+        url = begin +"//oath2:"+token+"@"+end ;
+        console.log(url)
+      }
+      
+      
+      
       document.getElementById("loadingModalBtn").click();
         
         await git.clone({
         fs,
         http,
         dir,
-        username: gitusername,
-        password: gitpassword,
         corsProxy: 'https://cors.isomorphic-git.org',
         url: url,
         ref: 'main',
@@ -326,13 +334,21 @@
           
           
           ele.innerHTML += jsonText;
-
+          dlText(jsonText, url);
            // Now it should not be empty...
        
 
     }
     
-    // ARC2JSON("arc", "rna.json")
+    function dlText(text, Name){
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(text);
+    var dl = document.createElement('a');
+    dl.setAttribute("href",     dataStr);
+    dl.setAttribute("download", Name + ".json");
+    document.body.appendChild(dl);
+    dl.click();
+    dl.remove();
+  }
 
 
     var tour = new Tour(steps); // initialize the guided tour
