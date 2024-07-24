@@ -1,4 +1,4 @@
-var dataplant_json = {
+{
     "@id": "./",
     "filename": "isa.investigation.xlsx",
     "identifier": "Facultative-CAM-in-Talinum",
@@ -409,40 +409,13 @@ var dataplant_json = {
                         "name": "DB_099",
                         "characteristics": [
                             {
-                                "@id": "#MaterialAttributeValue/organism=Talinum fruticosum",
-                                "category": {
-                                    "@id": "#MaterialAttribute/OBI:0100026"
-                                },
-                                "value": {
-                                    "@id": "http://purl.obolibrary.org/obo/NCBITaxon_110664",
-                                    "annotationValue": "Talinum fruticosum",
-                                    "termSource": "NCBITaxon",
-                                    "termAccession": "http://purl.obolibrary.org/obo/NCBITaxon_110664"
-                                }
+                                "@id": "#MaterialAttributeValue/organism=Talinum fruticosum"
                             },
                             {
-                                "@id": "#MaterialAttributeValue/organism part=leaf",
-                                "category": {
-                                    "@id": "#MaterialAttribute/EFO:0000635"
-                                },
-                                "value": {
-                                    "@id": "http://purl.obolibrary.org/obo/PO_0025034",
-                                    "annotationValue": "leaf",
-                                    "termSource": "PO",
-                                    "termAccession": "http://purl.obolibrary.org/obo/PO_0025034"
-                                }
+                                "@id": "#MaterialAttributeValue/organism part=leaf"
                             },
                             {
-                                "@id": "#MaterialAttributeValue/plant age=28 days after germination",
-                                "category": {
-                                    "@id": "#MaterialAttribute/DPBO:0000033"
-                                },
-                                "value": {
-                                    "@id": "",
-                                    "annotationValue": "28 days after germination",
-                                    "termSource": "user-specific",
-                                    "termAccession": ""
-                                }
+                                "@id": "#MaterialAttributeValue/plant age=28 days after germination"
                             }
                         ]
                     },
@@ -451,40 +424,13 @@ var dataplant_json = {
                         "name": "DB_103",
                         "characteristics": [
                             {
-                                "@id": "#MaterialAttributeValue/organism=Talinum fruticosum",
-                                "category": {
-                                    "@id": "#MaterialAttribute/OBI:0100026"
-                                },
-                                "value": {
-                                    "@id": "http://purl.obolibrary.org/obo/NCBITaxon_110664",
-                                    "annotationValue": "Talinum fruticosum",
-                                    "termSource": "NCBITaxon",
-                                    "termAccession": "http://purl.obolibrary.org/obo/NCBITaxon_110664"
-                                }
+                                "@id": "#MaterialAttributeValue/organism=Talinum fruticosum"
                             },
                             {
-                                "@id": "#MaterialAttributeValue/organism part=leaf",
-                                "category": {
-                                    "@id": "#MaterialAttribute/EFO:0000635"
-                                },
-                                "value": {
-                                    "@id": "http://purl.obolibrary.org/obo/PO_0025034",
-                                    "annotationValue": "leaf",
-                                    "termSource": "PO",
-                                    "termAccession": "http://purl.obolibrary.org/obo/PO_0025034"
-                                }
+                                "@id": "#MaterialAttributeValue/organism part=leaf"
                             },
                             {
-                                "@id": "#MaterialAttributeValue/plant age=28 days after germination",
-                                "category": {
-                                    "@id": "#MaterialAttribute/DPBO:0000033"
-                                },
-                                "value": {
-                                    "@id": "",
-                                    "annotationValue": "28 days after germination",
-                                    "termSource": "user-specific",
-                                    "termAccession": ""
-                                }
+                                "@id": "#MaterialAttributeValue/plant age=28 days after germination"
                             }
                         ]
                     },
@@ -493,40 +439,13 @@ var dataplant_json = {
                         "name": "DB_161",
                         "characteristics": [
                             {
-                                "@id": "#MaterialAttributeValue/organism=Talinum fruticosum",
-                                "category": {
-                                    "@id": "#MaterialAttribute/OBI:0100026"
-                                },
-                                "value": {
-                                    "@id": "http://purl.obolibrary.org/obo/NCBITaxon_110664",
-                                    "annotationValue": "Talinum fruticosum",
-                                    "termSource": "NCBITaxon",
-                                    "termAccession": "http://purl.obolibrary.org/obo/NCBITaxon_110664"
-                                }
+                                "@id": "#MaterialAttributeValue/organism=Talinum fruticosum"
                             },
                             {
-                                "@id": "#MaterialAttributeValue/organism part=leaf",
-                                "category": {
-                                    "@id": "#MaterialAttribute/EFO:0000635"
-                                },
-                                "value": {
-                                    "@id": "http://purl.obolibrary.org/obo/PO_0025034",
-                                    "annotationValue": "leaf",
-                                    "termSource": "PO",
-                                    "termAccession": "http://purl.obolibrary.org/obo/PO_0025034"
-                                }
+                                "@id": "#MaterialAttributeValue/organism part=leaf"
                             },
                             {
-                                "@id": "#MaterialAttributeValue/plant age=28 days after germination",
-                                "category": {
-                                    "@id": "#MaterialAttribute/DPBO:0000033"
-                                },
-                                "value": {
-                                    "@id": "",
-                                    "annotationValue": "28 days after germination",
-                                    "termSource": "user-specific",
-                                    "termAccession": ""
-                                }
+                                "@id": "#MaterialAttributeValue/plant age=28 days after germination"
                             }
                         ]
                     },
@@ -535,40 +454,13 @@ var dataplant_json = {
                         "name": "DB_163",
                         "characteristics": [
                             {
-                                "@id": "#MaterialAttributeValue/organism=Talinum fruticosum",
-                                "category": {
-                                    "@id": "#MaterialAttribute/OBI:0100026"
-                                },
-                                "value": {
-                                    "@id": "http://purl.obolibrary.org/obo/NCBITaxon_110664",
-                                    "annotationValue": "Talinum fruticosum",
-                                    "termSource": "NCBITaxon",
-                                    "termAccession": "http://purl.obolibrary.org/obo/NCBITaxon_110664"
-                                }
+                                "@id": "#MaterialAttributeValue/organism=Talinum fruticosum"
                             },
                             {
-                                "@id": "#MaterialAttributeValue/organism part=leaf",
-                                "category": {
-                                    "@id": "#MaterialAttribute/EFO:0000635"
-                                },
-                                "value": {
-                                    "@id": "http://purl.obolibrary.org/obo/PO_0025034",
-                                    "annotationValue": "leaf",
-                                    "termSource": "PO",
-                                    "termAccession": "http://purl.obolibrary.org/obo/PO_0025034"
-                                }
+                                "@id": "#MaterialAttributeValue/organism part=leaf"
                             },
                             {
-                                "@id": "#MaterialAttributeValue/plant age=28 days after germination",
-                                "category": {
-                                    "@id": "#MaterialAttribute/DPBO:0000033"
-                                },
-                                "value": {
-                                    "@id": "",
-                                    "annotationValue": "28 days after germination",
-                                    "termSource": "user-specific",
-                                    "termAccession": ""
-                                }
+                                "@id": "#MaterialAttributeValue/plant age=28 days after germination"
                             }
                         ]
                     },
@@ -577,40 +469,13 @@ var dataplant_json = {
                         "name": "DB_165",
                         "characteristics": [
                             {
-                                "@id": "#MaterialAttributeValue/organism=Talinum fruticosum",
-                                "category": {
-                                    "@id": "#MaterialAttribute/OBI:0100026"
-                                },
-                                "value": {
-                                    "@id": "http://purl.obolibrary.org/obo/NCBITaxon_110664",
-                                    "annotationValue": "Talinum fruticosum",
-                                    "termSource": "NCBITaxon",
-                                    "termAccession": "http://purl.obolibrary.org/obo/NCBITaxon_110664"
-                                }
+                                "@id": "#MaterialAttributeValue/organism=Talinum fruticosum"
                             },
                             {
-                                "@id": "#MaterialAttributeValue/organism part=leaf",
-                                "category": {
-                                    "@id": "#MaterialAttribute/EFO:0000635"
-                                },
-                                "value": {
-                                    "@id": "http://purl.obolibrary.org/obo/PO_0025034",
-                                    "annotationValue": "leaf",
-                                    "termSource": "PO",
-                                    "termAccession": "http://purl.obolibrary.org/obo/PO_0025034"
-                                }
+                                "@id": "#MaterialAttributeValue/organism part=leaf"
                             },
                             {
-                                "@id": "#MaterialAttributeValue/plant age=28 days after germination",
-                                "category": {
-                                    "@id": "#MaterialAttribute/DPBO:0000033"
-                                },
-                                "value": {
-                                    "@id": "",
-                                    "annotationValue": "28 days after germination",
-                                    "termSource": "user-specific",
-                                    "termAccession": ""
-                                }
+                                "@id": "#MaterialAttributeValue/plant age=28 days after germination"
                             }
                         ]
                     }

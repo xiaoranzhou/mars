@@ -335,6 +335,8 @@
           
           ele.innerHTML += jsonText;
           dlText(jsonText, url);
+          dataplant_json = JSON.parse(jsonText);
+          document.getElementById("submitNavBtn").click()
            // Now it should not be empty...
        
 
