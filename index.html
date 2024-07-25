@@ -27,13 +27,16 @@
     }
 
     .uploadarea {
-      border: 4px dashed rgb(45, 62, 80);
-      filter: alpha(opacity=50);
+      margin: 4px;
+      padding: 6px;
+      border: 3px solid #4fb3d9;    
+      border-style: outset;
+      border-radius: 5px;
       -khtml-opacity: 0.5;
       -moz-opacity: 0.5;
       opacity: 0.5;
       height: 20vh;
-      background-image: url("./images/download.png");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%234fb3d9' class='bi bi-cloud-upload' viewBox='0 0 16 16'><path fill-rule='evenodd' d='M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383'/><path fill-rule='evenodd' d='M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708z'/></svg>");
       background-position: center;
       background-repeat: no-repeat;
       background-size: 64px 64px;
@@ -68,27 +71,32 @@
       
       margin: 4px;
       padding: 6px;
-      border: 1px solid blue;    
-
+      border: 3px solid #4fb3d9;    
+      border-style: outset;
+      border-radius: 5px;
     }
 
     *[title]:hover:after {
-      background-color:rgb(171, 225, 201);
+      background-color:#8fe1d3;
       content: attr(name) '\A' attr(description);
       z-index: 1;
       position: absolute;
 
     }
     span.studies {
-    background-color:rgb(125, 176, 140);  
+    background-color:#fff9e6;  
 
     }
     span.collapsed {
-      border: 2px solid rgb(185, 4, 94);  
-
+      border: 4px #c21f3a;  
+      border-style:inset;
+    }
+    span.collapsed::before {
+      content: "+"; 
+      color:#c21f3a;
     }
     span.assays {
-      background-color:rgb(202, 150, 197);  
+      background-color:#F8E8EB;  
 
     }
   </style>
@@ -236,12 +244,7 @@
     <input class="btn btn-primary d-inline d-none" type="file" id="input_json" name="json" multiple />
     
 
-    <div class=" area uploadarea " id="importArea" ondragenter="this.className='area uploadarea dragging'"
-      ondrop=";DragAndDrop(event)" style="margin:auto; height:30vh; width:50vw">
-
-
-      <input type="file" id="import" multiple>
-    </div><br>
+<br>
     <button class="btn btn-primary" style="display:inline" data-bs-toggle="modal" data-bs-target="#cModal"
       id="cModalButton"> Start Submissions </button>
     <div class="d-flex justify-content-center d-none" id="waiting">
@@ -311,10 +314,20 @@
   </div>
 </div>
 <div name="tab" class=" col-12 d-none" id="isacheckTab">
-<div id="jsonVisualize" class="col-12">
+
+  <div class=" area uploadarea " id="importArea" ondragenter="this.className='area uploadarea dragging'"
+  ondrop=";DragAndDrop(event)" style="margin:auto; height:30vh; width:50vw">
+
+
+  <input type="file" id="import" multiple>
+</div>
+<label for="jsonRange" class="form-label">Select the expand level of ISA JSON</label>
+<input type="range" class="form-range" id="jsonRange"  min="2" max="2" onchange="setRange(this)">
+
+<span id="jsonVisualize" class="col-12 json">
    
 
-</div>
+</span>
 
 
 </div>
@@ -334,7 +347,14 @@
     }
     ];
 
-
+    function setRange(ele){
+      const value1 = String(ele.value-1);
+      const value2 = String(ele.value); 
+      document.querySelectorAll('[data-order*="'+value1+'"]').forEach(e=> e.classList.add('collapsed'));
+      document.querySelectorAll('[data-order*="'+value2+'"]').forEach(e=> e.classList.remove('collapsed'));  
+      document.querySelectorAll('[data-order*="'+value1+'"]').forEach(e=> e.classList.remove('d-none'));  
+      document.querySelectorAll('[data-order*="'+ value2+'"]').forEach(e=> e.classList.add('d-none'))
+    }
 
     //fetch('https://git.nfdi4plants.org/api/v4/projects')
       // .then(data => {
@@ -343,18 +363,31 @@
       // .then(post => {
       // console.log(post);
       // });
-      window.path;
-      function traverse(json, parentNode) {
+      window.id = 0;
+      window.order = 0;
+      function traverse(json, parentNode, order) {
           if (typeof json !== 'object' || json === null) return;
-          
+          order +=1;
+          document.getElementById("jsonRange").setAttribute("max", order);
           Object.entries(json).forEach(([key, value]) => {
             const keyAttribute = key.replace("@", "at");
               
               if (typeof(value)=='string'){
-                
-                parentNode.setAttribute(keyAttribute,value);
+                try {
+                  //parentNode.setAttribute(keyAttribute,value);
+                  let childNode = document.createElement("span");
+                  childNode.classList.add("json");
+                  childNode.classList.add(key);
+                  childNode.innerText = key;
+                  childNode.setAttribute("title",value);
+                  childNode.setAttribute("data-order",order);
+                  parentNode.appendChild(childNode);
+                } catch (error) {
+                  alert(e);
+                }
+               
                 if ((key=='@id')||(key=='name')){
-                  parentNode.innerText += " "+ value;
+                  //parentNode.innerText += key+ " "+ value+ " ";
                   
                   //parentNode.classList.add(value);
                 }
@@ -364,13 +397,20 @@
                 childNode.classList.add("json");
                 childNode.classList.add(key);
                 childNode.innerText = key;
-                window.path += 1;
-                childNode.setAttribute("id","jsonId"+window.path);
+                childNode.setAttribute("data-order",order);
+                window.id += 1;
+                try {
+                  childNode.setAttribute("id","jsonId"+window.id);
+                } catch (error) {
+                  alert(e);
+                }
+                
                 childNode.setAttribute("name",key);
                 
                 childNode.setAttribute("onclick", "event.stopPropagation();this.classList.toggle('collapsed'); this.querySelectorAll('*').forEach(e=> e.classList.toggle('d-none'))");
                 parentNode.appendChild(childNode);
-                traverse(value, childNode)
+                traverse(value, childNode, order);
+
               }
               ;
           });
@@ -379,7 +419,14 @@
     function isaVis(json){
       window.path= 0;
       let ele1 = document.getElementById("jsonVisualize");
-      traverse(json, ele1, 0);
+      ele1.innerHTML="";
+      var order = 0;
+      try {
+        traverse(json, ele1,  order);
+      } catch (error) {
+        alert(e);
+      }
+      
     }
 
     async function cloneARC(){
@@ -452,14 +499,14 @@
       // This event listener will happen when the reader has read the file
       reader.addEventListener('load', function () {
         var result = JSON.parse(reader.result); // Parse the result into an object 
-        //console.log("reader.result is : "+reader.result);
-        input_json = {"investigation": result};
+        isaVis(result);
 
         //console.log("result is : " + result);
 
       });
 
       reader.readAsText(ele.files[0]); // Read the uploaded file
+
     }
     function softRoute(){
           const urlRoute = window.location.href.split("#");
@@ -578,7 +625,8 @@
           //console.log("reader.result is : "+reader.result);
           //input_json = {"investigation": result};
           //testJSON = {"investigation": result};
-          testJSON= result;
+          isaVis(result);
+          //testJSON= result;
           // testJSON.investigation.studies.forEach((ele)=>{Object.values(ele.materials).forEach((ele2)=>{console.log(findValues(ele2, "value"))})});
           // testJSON.investigation.studies.forEach((ele)=>{Object.values(ele.processSequence).forEach((ele2)=>{console.log(findValues(ele2, "value"))})});
           // testJSON.investigation.studies.forEach((ele)=>{Object.values(ele.assays).forEach((ele2)=>{console.log(findValues(ele2, "value"))})});
