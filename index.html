@@ -62,6 +62,35 @@
     .uploadarea input:focus {
       outline: none;
     }
+
+    span.json {
+      display: inline-block;
+      
+      margin: 4px;
+      padding: 6px;
+      border: 1px solid blue;    
+
+    }
+
+    *[title]:hover:after {
+      background-color:rgb(171, 225, 201);
+      content: attr(name) '\A' attr(description);
+      z-index: 1;
+      position: absolute;
+
+    }
+    span.studies {
+    background-color:rgb(125, 176, 140);  
+
+    }
+    span.collapsed {
+      border: 2px solid rgb(185, 4, 94);  
+
+    }
+    span.assays {
+      background-color:rgb(202, 150, 197);  
+
+    }
   </style>
 
   <!--<script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>-->
@@ -71,7 +100,7 @@
   <link href="./css/bs5-intro-tour.css" rel="stylesheet" />
   <script src="./js/bs5-intro-tour.js" type="text/javascript" charset="utf-8"></script>
   <!--script src="js/example.js" type="text/javascript" charset="utf-8"></script-->
-  <script src="./js/test_json_dataplant_no_investigation.js"></script>
+  <script src="./js/test_json_dataplant_no_investigation_small.js"></script>
   <script src="./js/test_json_datahub.js"></script>
   <script src="./js/dataplant_biosamples_returned_json.js"></script>
   <script src="./js/datahub_biosamples_returned_json.js"></script>
@@ -129,7 +158,9 @@
         <button type="button" onclick="location.href=location.href.split('#')[0]+'#a2j'" class="btn btn-nav" id="a2jNavBtn">
           ARC2ISA&nbsp;
           </button>
-
+          <button type="button" onclick="location.href=location.href.split('#')[0]+'#isacheck'" class="btn  btn-nav" id="isacheckNavBtn">
+            ISA Check &nbsp;
+            </button>
           <button type="button" onclick="location.href=location.href.split('#')[0]+'#submit'" class="btn  btn-nav" id="submitNavBtn">
             MARS Submit &nbsp;
             </button>
@@ -161,8 +192,14 @@
 
     </div>
   </div>
+<div class="container">
+  <div name="tab" class=" col-12 justify-content-center nav-link text-center" id="introTab">
+    <a href="#a2j"><h1>Converts ARCs to ISA-JSONs </h1></a>
+    <a href="#a2j"><h1>Checks, validate and auto complete of ISA-JSON </h1></a>
+    <a href="#submit"><h1>ISA-JSON submission</h1></a>
+  </div>
 
-  <div name="tab" class="col-12" id="submissionTab">
+  <div name="tab" class="col-12 d-none" id="submissionTab">
   <h1 class="center">MARS: Multi-omics Adapter for Repository Submissions </h1>
   
     
@@ -219,7 +256,7 @@
 
 </div>
 
-<div name="tab" class=" col-12" id="ARC2JSONTab">
+<div name="tab" class=" col-12 d-none" id="ARC2JSONTab">
 <form class="row g-3 align-items-center">
   <div class="row g-3 align-items-center">
     <div class="col-3 text-end">
@@ -273,6 +310,15 @@
 
   </div>
 </div>
+<div name="tab" class=" col-12 d-none" id="isacheckTab">
+<div id="jsonVisualize" class="col-12">
+   
+
+</div>
+
+
+</div>
+</div>
   <script type="text/javascript">
     var v_list, csv_content, cleanend_global, token , enaReturn = 0, biosamplesReturn= 0;
     var input_json = 0, input_xlsx;
@@ -297,6 +343,45 @@
       // .then(post => {
       // console.log(post);
       // });
+      window.path;
+      function traverse(json, parentNode) {
+          if (typeof json !== 'object' || json === null) return;
+          
+          Object.entries(json).forEach(([key, value]) => {
+            const keyAttribute = key.replace("@", "at");
+              
+              if (typeof(value)=='string'){
+                
+                parentNode.setAttribute(keyAttribute,value);
+                if ((key=='@id')||(key=='name')){
+                  parentNode.innerText += " "+ value;
+                  
+                  //parentNode.classList.add(value);
+                }
+
+              }else if (typeof(value)=='object'){
+                let childNode = document.createElement("span");
+                childNode.classList.add("json");
+                childNode.classList.add(key);
+                childNode.innerText = key;
+                window.path += 1;
+                childNode.setAttribute("id","jsonId"+window.path);
+                childNode.setAttribute("name",key);
+                
+                childNode.setAttribute("onclick", "event.stopPropagation();this.classList.toggle('collapsed'); this.querySelectorAll('*').forEach(e=> e.classList.toggle('d-none'))");
+                parentNode.appendChild(childNode);
+                traverse(value, childNode)
+              }
+              ;
+          });
+      };
+
+    function isaVis(json){
+      window.path= 0;
+      let ele1 = document.getElementById("jsonVisualize");
+      traverse(json, ele1, 0);
+    }
+
     async function cloneARC(){
       var url;
       const token = document.getElementById("gitpassword").value;
@@ -336,7 +421,8 @@
           ele.innerHTML += jsonText;
           dlText(jsonText, url);
           dataplant_json = JSON.parse(jsonText);
-          document.getElementById("submitNavBtn").click()
+          document.getElementById("isacheckNavBtn").click()
+          isaVis(dataplant_json);
            // Now it should not be empty...
        
 
@@ -389,10 +475,20 @@
                           
                         )
                           break;
-                          case "a2j":
+                    case "a2j":
                           document.querySelectorAll('div[name="tab"]').forEach((e)=> 
                           {
                             if (e.id == "ARC2JSONTab")
+                              {e.classList.remove("d-none") }
+                            else
+                              {e.classList.add("d-none")}}
+                          
+                        )
+                          break;
+                    case "isacheck":
+                          document.querySelectorAll('div[name="tab"]').forEach((e)=> 
+                          {
+                            if (e.id == "isacheckTab")
                               {e.classList.remove("d-none") }
                             else
                               {e.classList.add("d-none")}}
