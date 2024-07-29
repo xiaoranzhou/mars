@@ -14,20 +14,10 @@
       text-align: center;
     }
 
-    .area {
-      border-left: 1px solid #dee2e6;
-
-
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-
-
-      text-align: center;
-    }
+  
 
     .uploadarea {
-      margin: 4px;
+
       padding: 6px;
       border: 3px solid #4fb3d9;    
       border-style: outset;
@@ -308,7 +298,7 @@
       <label for="repoURL" class="col-form-label">ARC gitlab URL</label>
     </div>
     <div class="col-3">
-      <input type="text" id="repoURL" value='https://git.nfdi4plants.org/brilator/Facultative-CAM-in-Talinum.git' class="form-control" aria-describedby="repoURLLabel" required>
+      <input type="text" id="repoURL" value='https://git.nfdi4plants.org/ai.krueger/2024_GrowthCoupledHemeBiosensor.git' class="form-control" aria-describedby="repoURLLabel" required>
     </div>
     <div class="col-3">
       <span id="repoURLLabel" class="form-text">
@@ -357,14 +347,17 @@
 </div>
 <div name="tab" class=" col-8 d-none align-items-center m-auto" id="isacheckTab">
 
-  <div class=" area uploadarea " id="importArea" ondragenter="this.className='area uploadarea dragging'"
-  ondrop=";DragAndDrop(event)" style="margin:auto; height:30vh; width:52vw">
+  <div class=" area uploadarea my-3" id="importArea" ondragenter="this.className='area uploadarea dragging'"
+  ondrop=";DragAndDrop(event)" style=" width:100%">
 
 
   <input type="file" id="import" multiple>
 </div>
 <div id="alertPlace" > </div>
-<label for="jsonRange" class="form-label">Use the slider to change expansion level</label>
+<h4> ISA JSON Visualization: </h4>
+<label for="jsonRange" class="form-label">Chose the level of details by slides (larger number = more details). The blocks can collapsed or explanded by clicks and the values will show when the blocks are hovered. 
+
+</label>
 
 <input type="range" class="form-range"  id="jsonRange"  min="2" max="2" onchange="setRange(this)" list="steplist">
 <datalist id="steplist">
@@ -393,6 +386,13 @@
         <div class="d-flex justify-content-center">
           <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
+          </div>
+          
+
+        </div>
+        <span id="pbarLabel"> </span>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" id="pbarModal" role="progressbar" aria-label="Animated striped example" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%">
           </div>
         </div>
       </div>
@@ -551,7 +551,12 @@
                 let childNode = document.createElement("span");
                 childNode.classList.add("json");
                 childNode.classList.add(key);
-                childNode.innerText = key;
+                if ((Object.prototype.toString.call(json) === '[object Array]')){
+                  childNode.innerText = Number(key)+1;
+                }else{
+                  childNode.innerText = key;
+                }
+                
                 childNode.setAttribute("data-order",order);
                 window.id += 1;
                 try {
@@ -595,6 +600,22 @@
       
     }
 
+    function updateLabel(phrase){
+      document.getElementById("pbarLabel").innerHTML = phrase;
+    }
+    function updateProgressBar(progress){
+
+      const pbar = document.getElementById("pbarModal");
+      pbar.setAttribute("style", 'width:'+progress+'%;')
+      pbar.setAttribute("aria-valuenow", progress)
+    }
+    function updateIndeterminateProgressBar(progress){
+
+      const pbar = document.getElementById("pbarModal");
+      pbar.setAttribute("style", 'width:'+progress+'%;')
+      pbar.setAttribute("aria-valuenow", progress)
+      }
+
     async function cloneARC(){
       document.getElementById("loadingModalBtn").click();
       var url;
@@ -608,7 +629,7 @@
         console.log(url)
       }
        
-        await git.clone({
+        const res = await git.clone({
         fs,
         http,
         dir,
@@ -616,10 +637,18 @@
         url: url,
         ref: 'main',
         singleBranch: true,
-        depth: 20,
-        force: true
+        depth: 1,
+        force: true,
+        onProgress: event => {
+          updateLabel(event.phase)
+          if (event.total) {
+            updateProgressBar(event.loaded / event.total)
+          } else {
+            updateIndeterminateProgressBar(event.loaded)
+          }
+        }
           })
-          
+        
           const ele = document.getElementById("ARCInfo");
           //ele.innerHTML= "Downloading ARC successful, files are "+ (FS.readdirSync(dir));
           const dec = new TextDecoder;
@@ -1113,7 +1142,7 @@ function bsSubmit( json){
                 "@id" : "#parameter/353"
               },
               "value" : {
-                "annotationValue" : "OTHER",
+                "annotationValue" : "RNA-Seq",
                 "termSource" : "",
                 "termAccession" : ""
               },
@@ -1127,7 +1156,7 @@ function bsSubmit( json){
                 "@id" : "#parameter/354"
               },
               "value" : {
-                "annotationValue" : "RNA-Seq",
+                "annotationValue" : "other",
                 "termSource" : "",
                 "termAccession" : ""
               },
