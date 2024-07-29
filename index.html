@@ -292,6 +292,26 @@
 </div>
 
 <div name="tab" class=" col-12 d-none" id="ARC2JSONTab">
+  <div class="overflow-auto m-auto col-8 h-50"> 
+
+    <table class="table table-striped hover">
+      <thead>
+        <tr>
+          <th scope="col">Number</th>
+          <th scope="col">User/Group</th>
+          <th scope="col">Repo Name</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+
+      </tbody>
+    </table>
+
+
+  </div>
 <form class="row g-3 align-items-center">
   <div class="row g-3 align-items-center">
     <div class="col-3 text-end">
@@ -418,6 +438,14 @@
     }
     ];
 
+    var projectList;
+    fetch('https://git.nfdi4plants.org/api/v4/projects')
+      .then(data => {
+      return data.json();
+      })
+      .then(post => {
+      projectList = post;
+      });
 
     var checklist= [
         {
@@ -597,8 +625,11 @@
         stepListText += "<option value="+ i +" label="+i+" >"+i+"</option>"
       }
       document.getElementById("steplist").innerHTML=stepListText;
-      
+      jsonRange.value=3;
+      jsonRange.onchange()
     }
+
+    
 
     function updateLabel(phrase){
       document.getElementById("pbarLabel").innerHTML = phrase;
@@ -615,6 +646,8 @@
       pbar.setAttribute("style", 'width:'+progress+'%;')
       pbar.setAttribute("aria-valuenow", progress)
       }
+      
+    
 
     async function cloneARC(){
       document.getElementById("loadingModalBtn").click();
