@@ -491,10 +491,12 @@
       //
     }
     ];
-
-    var repoList;
+    addEventListener("load", (event) => {try{var repoList;
     fetch('https://git.nfdi4plants.org/api/v4/projects')
       .then(data => {
+        if (data.status >= 400 && data.status < 600) {
+      throw alert("Bad response from server, please check the availability of the server");
+        }
         return data.json();
       })
       .then(post => {
@@ -526,7 +528,13 @@
         `
           }
         }), document.getElementById("datahubTable").innerHTML = tableHTML;
-      });
+      }).catch((error) => {
+          // Your error is here!
+          alert(error)
+        });}catch(e){
+        alert(e);
+      }});
+    
 
     var checklist_has_key = [
       {
