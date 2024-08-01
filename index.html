@@ -98,6 +98,13 @@
       box-shadow: 0 8px 6px -6px #4fb3d9;
     }
 
+    span.missingKey {
+      font-weight: bold;
+      border: 4px #b005ad;
+      border-style: dotted;
+      box-shadow: 0 8px 6px -6px #c50070;
+    }
+
     span.collapsed::before {
       content: "+";
       color: #4fb3d9;
@@ -480,7 +487,7 @@
   </div>
   <script type="text/javascript">
     var v_list, csv_content, cleanend_global, token, enaReturn = 0, biosamplesReturn = 0;
-    var input_json = 0, input_xlsx;
+    var input_json, input_xlsx;
     var log_backup = console.log;
     var fs = FS.fs;
     var alertPlaceholder = document.getElementById('alertPlace');
@@ -547,9 +554,24 @@
         "key": "studies",
         "jsonata": "$.investigation.$keys()",
         "error": "element.key + \" can not be found in\" element.jsonata",
-        "fixfunction": null
+        "fixfunction": '$~>| $.investigation| {"studies":"missing_key"} |'
+      },
+      {
+        "description" : "evaluate the type of \"value\" key, try auto fix if the value is ",
+        "jsonata" : '$assert((true in **.value.(annotationValue!=null and "@id"!=null).$not()).$not(), "string and number values exist in the <value> keys")',
+        "error": "string and number values exist in the 'value' keys",
+        "fixfunction" : '$ ~> | $.**.value[(annotationValue!=null and "@id"!=null).$not()].% | {"value": {"annotationValue": value} }|'
+      },
+      {
+        "description" : "check if all organisms are added to the $.investigation.studies.materials.sources.characteristics ",
+        "jsonata" : '$assert ($.studies.materials.sources.characteristics."@id"[$contains("organism=")].%.category."@id".$contains("organism"), "error. organism is not found" )',
+        "fixfunction" : '$~> |$.investigation.studies.materials.sources.characteristics."@id"[$contains("organism=")].%|   {"category":{"@id": "#MaterialAttribute/organism/OBI:0100026" }} |'
       }
     ]
+    var checklist_general =[
+      
+    ]
+
     const loading = new bootstrap.Modal(document.getElementById('loadingModal'), {
       keyboard: true, show: false
     })
@@ -610,14 +632,17 @@
     async function checkall(checklist, isa) {
       window.alertPlaceholder.innerHTML = "";
       for (const [index, element] of Object.entries(checklist,)) {
-        try {
-          await jCheck(isa, checkHas(element.key, element.jsonata, element.key + " can not be found in " + element.jsonata));
-
-          bootAlert(element.key + "test passed", "success")
+        try { if(element.key){
+              await jCheck(isa, checkHas(element.key, element.jsonata, element.key + " can not be found in " + element.jsonata));
+              bootAlert(element.key + "can be found, test passed", "success")
+            } else {
+              await jCheck(isa, element.jsonata)
+              bootAlert(element.description + "test passed", "success")
+            } 
         } catch (e) {
           try {
             isa = await jCheck(isa, element.fixfunction);
-            bootAlert(element.key + "test passed after automatic patch", "warning");
+            bootAlert(element.jsonata + " test passed after automatic patch", "warning");
 
           } catch (e) {
             bootAlert(e.message, "danger")
@@ -646,17 +671,18 @@
             childNode.innerText = key;
             childNode.setAttribute("title", value);
             childNode.setAttribute("data-order", order);
+            value=="missing_key"? childNode.classList.add("missingKey") : {} ;
             parentNode.appendChild(childNode);
           } catch (error) {
             alert(e);
-          }
+          };
 
           if ((key == '@id') || (key == 'name')) {
             //parentNode.innerText += key+ " "+ value+ " ";
 
             //parentNode.classList.add(value);
-          }
-
+          };
+          
         } else if (typeof (value) == 'object') {
           let childNode = document.createElement("span");
           childNode.classList.add("json");
@@ -689,7 +715,7 @@
     };
 
     async function isaVis(json) {
-      json = await checkall(checklist_has_key, json);
+      input_json = await checkall(checklist_has_key, json);
       window.orderMax = 0;
       window.path = 0;
       let ele1 = document.getElementById("jsonVisualize");
