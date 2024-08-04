@@ -576,8 +576,8 @@
       },
       {
         "description": "check if all investigation.studies.materials.sources.characteristics.category.value has correct format",
-        "jsonata" : '$.investigation.studies.materials.sources.characteristics.category[$lookup("@id") ="#MaterialAttribute/organism/OBI:0100026"].%.value',
-        "fixfunction" :'$~> |.investigation.studies.materials.sources.characteristics.category[$lookup("@id") ="#MaterialAttribute/organism/OBI:0100026"].% | {"value": value} |'
+        "jsonata" : '($p := $.investigation.studies.materials.sources.characteristics.category[$lookup("@id") ="#MaterialAttribute/organism/OBI:0100026"].%; $assert( $count($p) = $count($p.value) , "wrror" ))',
+        "fixfunction" :'( $vv :=  $.investigation.studies.materials.sources.characteristics.category[$lookup("@id") ="#MaterialAttribute/organism/OBI:0100026"].%.value;$~> |$.investigation.studies.materials.sources.characteristics.category[$lookup("@id") ="#MaterialAttribute/organism/OBI:0100026"].(%) |    {"value": $vv}|)'
       }
     ]
 
