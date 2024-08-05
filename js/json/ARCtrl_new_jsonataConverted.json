@@ -57,11 +57,11 @@
                     {
                         "name": "ORCID",
                         "value": {
+                            "@id": "",
                             "annotationValue": "http://orcid.org/0000-0001-9021-3197",
-                            "termSource": "",
-                            "termAccession": ""
-                        },
-                        "@id": ""
+                            "termAccession": "",
+                            "termSource": ""
+                        }
                     }
                 ]
             },
@@ -82,11 +82,11 @@
                     {
                         "name": "ORCID",
                         "value": {
+                            "@id": "",
                             "annotationValue": "http://orcid.org/0000-0002-5309-0527",
-                            "termSource": "",
-                            "termAccession": ""
-                        },
-                        "@id": ""
+                            "termAccession": "",
+                            "termSource": ""
+                        }
                     }
                 ]
             },
@@ -107,11 +107,11 @@
                     {
                         "name": "ORCID",
                         "value": {
+                            "@id": "",
                             "annotationValue": "http://orcid.org/0000-0002-9161-4889",
-                            "termSource": "",
-                            "termAccession": ""
-                        },
-                        "@id": ""
+                            "termAccession": "",
+                            "termSource": ""
+                        }
                     }
                 ]
             },
@@ -147,11 +147,11 @@
                     {
                         "name": "ORCID",
                         "value": {
+                            "@id": "",
                             "annotationValue": "http://orcid.org/0000-0003-0970-4672",
-                            "termSource": "",
-                            "termAccession": ""
-                        },
-                        "@id": ""
+                            "termAccession": "",
+                            "termSource": ""
+                        }
                     }
                 ]
             }
@@ -190,11 +190,11 @@
                             {
                                 "name": "performer (ARC:00000168) Talinum_RNASeq_minimal",
                                 "value": {
+                                    "@id": "",
                                     "annotationValue": "Talinum_RNASeq_minimal",
-                                    "termSource": "",
-                                    "termAccession": ""
-                                },
-                                "@id": ""
+                                    "termAccession": "",
+                                    "termSource": ""
+                                }
                             }
                         ]
                     },
@@ -221,11 +221,11 @@
                             {
                                 "name": "performer (ARC:00000168) Talinum_RNASeq_minimal",
                                 "value": {
+                                    "@id": "",
                                     "annotationValue": "Talinum_RNASeq_minimal",
-                                    "termSource": "",
-                                    "termAccession": ""
-                                },
-                                "@id": ""
+                                    "termAccession": "",
+                                    "termSource": ""
+                                }
                             }
                         ]
                     },
@@ -249,11 +249,11 @@
                             {
                                 "name": "performer (ARC:00000168) Talinum_RNASeq_minimal",
                                 "value": {
+                                    "@id": "",
                                     "annotationValue": "Talinum_RNASeq_minimal",
-                                    "termSource": "",
-                                    "termAccession": ""
-                                },
-                                "@id": ""
+                                    "termAccession": "",
+                                    "termSource": ""
+                                }
                             }
                         ]
                     },
@@ -268,11 +268,11 @@
                             {
                                 "name": "performer (ARC:00000168) GCqTOF_targets",
                                 "value": {
+                                    "@id": "",
                                     "annotationValue": "GCqTOF_targets",
-                                    "termSource": "",
-                                    "termAccession": ""
-                                },
-                                "@id": ""
+                                    "termAccession": "",
+                                    "termSource": ""
+                                }
                             }
                         ]
                     },
@@ -290,11 +290,11 @@
                             {
                                 "name": "performer (ARC:00000168) GCqTOF_targets",
                                 "value": {
+                                    "@id": "",
                                     "annotationValue": "GCqTOF_targets",
-                                    "termSource": "",
-                                    "termAccession": ""
-                                },
-                                "@id": ""
+                                    "termAccession": "",
+                                    "termSource": ""
+                                }
                             }
                         ]
                     },
@@ -309,11 +309,11 @@
                             {
                                 "name": "performer (ARC:00000168) GCqTOF_targets",
                                 "value": {
+                                    "@id": "",
                                     "annotationValue": "GCqTOF_targets",
-                                    "termSource": "",
-                                    "termAccession": ""
-                                },
-                                "@id": ""
+                                    "termAccession": "",
+                                    "termSource": ""
+                                }
                             }
                         ]
                     },
@@ -328,11 +328,11 @@
                             {
                                 "name": "performer (ARC:00000168) GCqTOF_targets",
                                 "value": {
+                                    "@id": "",
                                     "annotationValue": "GCqTOF_targets",
-                                    "termSource": "",
-                                    "termAccession": ""
-                                },
-                                "@id": ""
+                                    "termAccession": "",
+                                    "termSource": ""
+                                }
                             }
                         ]
                     },
@@ -345,11 +345,11 @@
                             {
                                 "name": "performer (ARC:00000168) MassHunter_targets",
                                 "value": {
+                                    "@id": "",
                                     "annotationValue": "MassHunter_targets",
-                                    "termSource": "",
-                                    "termAccession": ""
-                                },
-                                "@id": ""
+                                    "termAccession": "",
+                                    "termSource": ""
+                                }
                             }
                         ]
                     }
@@ -429,9 +429,26 @@
                             "characteristics": [
                                 {
                                     "@id": "#MaterialAttributeValue/organism=Talinum fruticosum",
-                                    "category": {
-                                        "@id": "#MaterialAttribute/organism/OBI:0100026"
-                                    },
+                                    "category": [
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        }
+                                    ],
                                     "value": {
                                         "@id": "http://purl.obolibrary.org/obo/NCBITaxon_110664",
                                         "annotationValue": "Talinum fruticosum",
@@ -471,15 +488,56 @@
                             "characteristics": [
                                 {
                                     "@id": "#MaterialAttributeValue/organism=Talinum fruticosum",
-                                    "category": {
-                                        "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                    "category": [
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        }
+                                    ],
+                                    "value": {
+                                        "@id": "http://purl.obolibrary.org/obo/NCBITaxon_110664",
+                                        "annotationValue": "Talinum fruticosum",
+                                        "termSource": "NCBITaxon",
+                                        "termAccession": "http://purl.obolibrary.org/obo/NCBITaxon_110664"
                                     }
                                 },
                                 {
-                                    "@id": "#MaterialAttributeValue/organism part=leaf"
+                                    "@id": "#MaterialAttributeValue/organism part=leaf",
+                                    "value": {
+                                        "@id": "http://purl.obolibrary.org/obo/PO_0025034",
+                                        "annotationValue": "leaf",
+                                        "termSource": "PO",
+                                        "termAccession": "http://purl.obolibrary.org/obo/PO_0025034"
+                                    },
+                                    "category": {
+                                        "@id": "#MaterialAttribute/EFO:0000635"
+                                    }
                                 },
                                 {
-                                    "@id": "#MaterialAttributeValue/plant age=28 days after germination"
+                                    "@id": "#MaterialAttributeValue/plant age=28 days after germination",
+                                    "value": {
+                                        "@id": "",
+                                        "annotationValue": "28 days after germination",
+                                        "termSource": "user-specific",
+                                        "termAccession": ""
+                                    },
+                                    "category": {
+                                        "@id": "#MaterialAttribute/DPBO:0000033"
+                                    }
                                 }
                             ]
                         },
@@ -489,15 +547,56 @@
                             "characteristics": [
                                 {
                                     "@id": "#MaterialAttributeValue/organism=Talinum fruticosum",
-                                    "category": {
-                                        "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                    "category": [
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        }
+                                    ],
+                                    "value": {
+                                        "@id": "http://purl.obolibrary.org/obo/NCBITaxon_110664",
+                                        "annotationValue": "Talinum fruticosum",
+                                        "termSource": "NCBITaxon",
+                                        "termAccession": "http://purl.obolibrary.org/obo/NCBITaxon_110664"
                                     }
                                 },
                                 {
-                                    "@id": "#MaterialAttributeValue/organism part=leaf"
+                                    "@id": "#MaterialAttributeValue/organism part=leaf",
+                                    "value": {
+                                        "@id": "http://purl.obolibrary.org/obo/PO_0025034",
+                                        "annotationValue": "leaf",
+                                        "termSource": "PO",
+                                        "termAccession": "http://purl.obolibrary.org/obo/PO_0025034"
+                                    },
+                                    "category": {
+                                        "@id": "#MaterialAttribute/EFO:0000635"
+                                    }
                                 },
                                 {
-                                    "@id": "#MaterialAttributeValue/plant age=28 days after germination"
+                                    "@id": "#MaterialAttributeValue/plant age=28 days after germination",
+                                    "value": {
+                                        "@id": "",
+                                        "annotationValue": "28 days after germination",
+                                        "termSource": "user-specific",
+                                        "termAccession": ""
+                                    },
+                                    "category": {
+                                        "@id": "#MaterialAttribute/DPBO:0000033"
+                                    }
                                 }
                             ]
                         },
@@ -507,15 +606,56 @@
                             "characteristics": [
                                 {
                                     "@id": "#MaterialAttributeValue/organism=Talinum fruticosum",
-                                    "category": {
-                                        "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                    "category": [
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        }
+                                    ],
+                                    "value": {
+                                        "@id": "http://purl.obolibrary.org/obo/NCBITaxon_110664",
+                                        "annotationValue": "Talinum fruticosum",
+                                        "termSource": "NCBITaxon",
+                                        "termAccession": "http://purl.obolibrary.org/obo/NCBITaxon_110664"
                                     }
                                 },
                                 {
-                                    "@id": "#MaterialAttributeValue/organism part=leaf"
+                                    "@id": "#MaterialAttributeValue/organism part=leaf",
+                                    "value": {
+                                        "@id": "http://purl.obolibrary.org/obo/PO_0025034",
+                                        "annotationValue": "leaf",
+                                        "termSource": "PO",
+                                        "termAccession": "http://purl.obolibrary.org/obo/PO_0025034"
+                                    },
+                                    "category": {
+                                        "@id": "#MaterialAttribute/EFO:0000635"
+                                    }
                                 },
                                 {
-                                    "@id": "#MaterialAttributeValue/plant age=28 days after germination"
+                                    "@id": "#MaterialAttributeValue/plant age=28 days after germination",
+                                    "value": {
+                                        "@id": "",
+                                        "annotationValue": "28 days after germination",
+                                        "termSource": "user-specific",
+                                        "termAccession": ""
+                                    },
+                                    "category": {
+                                        "@id": "#MaterialAttribute/DPBO:0000033"
+                                    }
                                 }
                             ]
                         },
@@ -525,15 +665,56 @@
                             "characteristics": [
                                 {
                                     "@id": "#MaterialAttributeValue/organism=Talinum fruticosum",
-                                    "category": {
-                                        "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                    "category": [
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        }
+                                    ],
+                                    "value": {
+                                        "@id": "http://purl.obolibrary.org/obo/NCBITaxon_110664",
+                                        "annotationValue": "Talinum fruticosum",
+                                        "termSource": "NCBITaxon",
+                                        "termAccession": "http://purl.obolibrary.org/obo/NCBITaxon_110664"
                                     }
                                 },
                                 {
-                                    "@id": "#MaterialAttributeValue/organism part=leaf"
+                                    "@id": "#MaterialAttributeValue/organism part=leaf",
+                                    "value": {
+                                        "@id": "http://purl.obolibrary.org/obo/PO_0025034",
+                                        "annotationValue": "leaf",
+                                        "termSource": "PO",
+                                        "termAccession": "http://purl.obolibrary.org/obo/PO_0025034"
+                                    },
+                                    "category": {
+                                        "@id": "#MaterialAttribute/EFO:0000635"
+                                    }
                                 },
                                 {
-                                    "@id": "#MaterialAttributeValue/plant age=28 days after germination"
+                                    "@id": "#MaterialAttributeValue/plant age=28 days after germination",
+                                    "value": {
+                                        "@id": "",
+                                        "annotationValue": "28 days after germination",
+                                        "termSource": "user-specific",
+                                        "termAccession": ""
+                                    },
+                                    "category": {
+                                        "@id": "#MaterialAttribute/DPBO:0000033"
+                                    }
                                 }
                             ]
                         },
@@ -543,15 +724,56 @@
                             "characteristics": [
                                 {
                                     "@id": "#MaterialAttributeValue/organism=Talinum fruticosum",
-                                    "category": {
-                                        "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                    "category": [
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        },
+                                        {
+                                            "@id": "#MaterialAttribute/organism/OBI:0100026"
+                                        }
+                                    ],
+                                    "value": {
+                                        "@id": "http://purl.obolibrary.org/obo/NCBITaxon_110664",
+                                        "annotationValue": "Talinum fruticosum",
+                                        "termSource": "NCBITaxon",
+                                        "termAccession": "http://purl.obolibrary.org/obo/NCBITaxon_110664"
                                     }
                                 },
                                 {
-                                    "@id": "#MaterialAttributeValue/organism part=leaf"
+                                    "@id": "#MaterialAttributeValue/organism part=leaf",
+                                    "value": {
+                                        "@id": "http://purl.obolibrary.org/obo/PO_0025034",
+                                        "annotationValue": "leaf",
+                                        "termSource": "PO",
+                                        "termAccession": "http://purl.obolibrary.org/obo/PO_0025034"
+                                    },
+                                    "category": {
+                                        "@id": "#MaterialAttribute/EFO:0000635"
+                                    }
                                 },
                                 {
-                                    "@id": "#MaterialAttributeValue/plant age=28 days after germination"
+                                    "@id": "#MaterialAttributeValue/plant age=28 days after germination",
+                                    "value": {
+                                        "@id": "",
+                                        "annotationValue": "28 days after germination",
+                                        "termSource": "user-specific",
+                                        "termAccession": ""
+                                    },
+                                    "category": {
+                                        "@id": "#MaterialAttribute/DPBO:0000033"
+                                    }
                                 }
                             ]
                         }
@@ -724,56 +946,56 @@
                                     "@id": "#ProtocolParameter/PECO:0007224"
                                 },
                                 "value": {
-                                    "annotationValue": 425,
-                                    "termSource": "",
-                                    "termAccession": ""
+                                    "@id": "",
+                                    "annotationValue": "425",
+                                    "termAccession": "",
+                                    "termSource": ""
                                 },
                                 "unit": {
                                     "@id": "http://purl.obolibrary.org/obo/UO_0000160"
-                                },
-                                "@id": ""
+                                }
                             },
                             {
                                 "category": {
                                     "@id": "#ProtocolParameter/DPBO:0000005"
                                 },
                                 "value": {
-                                    "annotationValue": 37,
-                                    "termSource": "",
-                                    "termAccession": ""
+                                    "@id": "",
+                                    "annotationValue": "37",
+                                    "termAccession": "",
+                                    "termSource": ""
                                 },
                                 "unit": {
                                     "@id": "http://purl.obolibrary.org/obo/UO_0000187"
-                                },
-                                "@id": ""
+                                }
                             },
                             {
                                 "category": {
                                     "@id": "#ProtocolParameter/DPBO:0000007"
                                 },
                                 "value": {
-                                    "annotationValue": 30,
-                                    "termSource": "",
-                                    "termAccession": ""
+                                    "@id": "",
+                                    "annotationValue": "30",
+                                    "termAccession": "",
+                                    "termSource": ""
                                 },
                                 "unit": {
                                     "@id": "http://purl.obolibrary.org/obo/UO_0000027"
-                                },
-                                "@id": ""
+                                }
                             },
                             {
                                 "category": {
                                     "@id": "#ProtocolParameter/DPBO:0000008"
                                 },
                                 "value": {
-                                    "annotationValue": 22,
-                                    "termSource": "",
-                                    "termAccession": ""
+                                    "@id": "",
+                                    "annotationValue": "22",
+                                    "termAccession": "",
+                                    "termSource": ""
                                 },
                                 "unit": {
                                     "@id": "http://purl.obolibrary.org/obo/UO_0000027"
-                                },
-                                "@id": ""
+                                }
                             }
                         ],
                         "inputs": [
@@ -976,14 +1198,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 80,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "80",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -1006,14 +1228,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000051"
                                         },
                                         "value": {
-                                            "annotationValue": 300,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "300",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -1048,14 +1270,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 78,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "78",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -1078,14 +1300,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000051"
                                         },
                                         "value": {
-                                            "annotationValue": 300,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "300",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -1120,14 +1342,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 93,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "93",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -1150,14 +1372,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000051"
                                         },
                                         "value": {
-                                            "annotationValue": 300,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "300",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -1192,14 +1414,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 82,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "82",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -1222,14 +1444,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000051"
                                         },
                                         "value": {
-                                            "annotationValue": 300,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "300",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -1264,14 +1486,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 96,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "96",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -1294,14 +1516,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000051"
                                         },
                                         "value": {
-                                            "annotationValue": 300,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "300",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -1336,14 +1558,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 78,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "78",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -1366,14 +1588,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000051"
                                         },
                                         "value": {
-                                            "annotationValue": 300,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "300",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2324,14 +2546,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 6.1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "6.1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2376,14 +2598,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010013"
                                         },
                                         "value": {
-                                            "annotationValue": 50,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "50",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2441,14 +2663,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 5.2,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "5.2",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2487,14 +2709,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010013"
                                         },
                                         "value": {
-                                            "annotationValue": 50,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "50",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2552,14 +2774,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 8.2,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "8.2",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2598,14 +2820,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010013"
                                         },
                                         "value": {
-                                            "annotationValue": 50,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "50",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2663,14 +2885,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 4.9,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "4.9",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2709,14 +2931,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010013"
                                         },
                                         "value": {
-                                            "annotationValue": 50,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "50",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2774,14 +2996,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 6,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "6",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2820,14 +3042,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010013"
                                         },
                                         "value": {
-                                            "annotationValue": 50,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "50",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2885,14 +3107,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0000013"
                                         },
                                         "value": {
-                                            "annotationValue": 6.2,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "6.2",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000022"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -2931,14 +3153,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010013"
                                         },
                                         "value": {
-                                            "annotationValue": 50,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "50",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -3126,14 +3348,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -3224,14 +3446,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -3324,14 +3546,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -3422,14 +3644,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -3522,14 +3744,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -3620,14 +3842,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -3717,14 +3939,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -3815,14 +4037,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -3912,14 +4134,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -4010,14 +4232,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -4107,14 +4329,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -4204,14 +4426,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -4301,14 +4523,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -4399,14 +4621,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -4496,14 +4718,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -4594,14 +4816,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -4691,14 +4913,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -4789,14 +5011,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -4886,14 +5108,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -4984,14 +5206,14 @@
                                             "@id": "#ProtocolParameter/DPBO:0010014"
                                         },
                                         "value": {
-                                            "annotationValue": 1,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "1",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000101"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -5135,14 +5357,14 @@
                                             "@id": "#ProtocolParameter/MS:1000015"
                                         },
                                         "value": {
-                                            "annotationValue": 20,
-                                            "termSource": "",
-                                            "termAccession": ""
+                                            "@id": "",
+                                            "annotationValue": "20",
+                                            "termAccession": "",
+                                            "termSource": ""
                                         },
                                         "unit": {
                                             "@id": "http://purl.obolibrary.org/obo/UO_0000106"
-                                        },
-                                        "@id": ""
+                                        }
                                     },
                                     {
                                         "category": {
@@ -5510,7 +5732,7 @@
                 ],
                 "characteristicCategories": [
                     {
-                        "@id": "#MaterialAttribute/OBI:0100026",
+                        "@id": "#MaterialAttribute/organism/OBI:0100026",
                         "characteristicType": {
                             "@id": "OBI:0100026",
                             "annotationValue": "organism",
