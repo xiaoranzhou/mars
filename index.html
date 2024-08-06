@@ -149,6 +149,12 @@
           #ccc 11%,
           #ccc 20%);
     }
+
+    .scrollTable{
+      height : 100px;
+      overflow-y: scroll;
+      width: 40vw;
+    }
   </style>
 
   <!--<script src="https://cdn.jsdelivr.net/pyodide/v0.21.3/full/pyodide.js"></script>-->
@@ -293,11 +299,11 @@
 
       <div class="center">
 
-        DataPLANT test JSON -> BioSamples, click <a href="#" onclick="bstest(trim_dataplant(dataplant_json))">here</a>
+        DataPLANT test JSON -> BioSamples, click <a href="#" onclick="submitAll('biosamples', window.dataplant_json) ">here</a>
         <br>
-        DataHub test JSON -> BioSamples, click <a href="#" onclick="bstest(datahub_json)">here</a> <br>
+        DataHub test JSON -> BioSamples, click <a href="#" onclick="submitAll('biosamples', window.dataplan_json)">here</a> <br>
         DataPLANT test JSON -> ENA, click <a href="#"
-          onclick="enatest(enaModify(dataplant_biosamples_returned_json))">here</a> <br>
+          onclick="submitAll('ena', enaModify(dataplant_biosamples_returned_json))">here</a> <br>
         DataHub test JSON -> ENA, click <a href="#" onclick="enatest(datahub_biosamples_returned_json)">here</a>
         <br>
         <input class="btn btn-primary d-inline d-none" type="file" id="input_json" name="json" multiple />
@@ -487,7 +493,8 @@
   </div>
   <script type="text/javascript">
     var v_list, csv_content, cleanend_global, token, enaReturn = 0, biosamplesReturn = 0;
-    var input_json, input_xlsx;
+    var input_json = dataplant_json;
+    var input_xlsx;
     var log_backup = console.log;
     var fs = FS.fs;
     var alertPlaceholder = document.getElementById('alertPlace');
@@ -543,7 +550,7 @@
       }});
     
 
-    var checklist_has_key = [
+    var checklist_biosamples = [
       {
         "description" : "investigation existance test",
         "key": "investigation",
@@ -560,9 +567,9 @@
       },
       {
         "description" : "evaluate the type of \"value\" key, try auto fix if the value is ",
-        "jsonata" : '$assert((true in **.value.((annotationValue!=null) or (($lookup("@id")="") or ($lookup("@id"))) ).$not(), "string and number values exist in the <value> keys")',
+        "jsonata" : '$assert($.studies.**[($type(value) = "string") or ($type(value) = "number")], "error, the types of value in studies are strings or numbers")',
         "error": "string and number values exist in the 'value' keys",
-        "fixfunction" : '$ ~> | $.**.value[((annotationValue!=null) or (($lookup("@id")="") or ($lookup("@id"))) ).$not()].% | { "value": {"@id": "","annotationValue": value.$string(), "termAccession":"", "termSource":"" } }|'
+        "fixfunction" : '($people := $.investigation.studies.people ;$c1 := $ ~> | $.investigation.studies.**[($type(value) = "string") or ($type(value) = "number") ] | { "value": {"@id": "","annotationValue": value.$string(), "termAccession":"", "termSource":"" } }| ;  $c1 ~> | $.investigation.studies| {"people" : $people} | )'
       },
       {
         "description" : "check if organisms are added to the $.investigation.studies.materials.sources.characteristics ",
@@ -590,14 +597,23 @@
         "fixfunction" :'($dic := $.investigation.studies.materials.sources.characteristics[$lookup("value")]{ `@id` : value};$getvalue := function($id){($dic.$lookup($id))}; $ ~> |$.investigation.studies.materials.sources.characteristics| {"value": `@id`.$getvalue($) }| )'
       },
       {
-        "description": "Check if all investigation.studies.materials.sources have at least on characteristics",
+        "description": "Check if all investigation.studies.materials.sources have at least one characteristics",
         "jsonata": '$assert($count($.investigation.studies.materials.sources[$lookup("characteristics")]) = $count($.investigation.studies.materials.sources), "Not all sources in materials have characteristics ")',
         "fixfunction": '$~>|  $.investigation.studies.materials| {"sources" : sources[$lookup("characteristics")] }  |'
 
       }
     ]
 
+    var checklist_ena = [
+    {
+        "description" : "evaluate the type of \"value\" key, try auto fix if the value is ",
+        "jsonata" : '$assert($.studies.**[($type(value) = "string") or ($type(value) = "number")], "error")',
+        "error": "string and number values exist in the 'value' keys",
+        "fixfunction" : '$ ~> | $.investigation.studies.**[($type(value) = "string") or ($type(value) = "number") ] | { "value": {"@id": "","annotationValue": value.$string(), "termAccession":"", "termSource":"" } }|'
+      }
 
+
+    ]
     const loading = new bootstrap.Modal(document.getElementById('loadingModal'), {
       keyboard: true, show: false
     })
@@ -741,7 +757,7 @@
     };
 
     async function isaVis(json) {
-      window.input_json = await checkall(checklist_has_key, json);
+      window.input_json = await checkall(checklist_biosamples, json);
       window.orderMax = 0;
       window.path = 0;
       let ele1 = document.getElementById("jsonVisualize");
@@ -943,21 +959,6 @@
       }
 
     }
-    function checkInput() {
-      try {
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-        if (document.getElementById("import").files.length == 0) {
-          alert("There is no input file, the submission will use test file");
-          bstest()
-        } else {
-          bstest();
-        }
-      } catch (e) {
-        alert("Error, submission not successful, error is" + e)
-      }
-
-    }
 
     console.log = function () {
       //log_messages.push.apply(log_messages, arguments);
@@ -974,22 +975,23 @@
       if (this.files.length > 0) {
         loading.show();
         var reader = new FileReader(); // File reader to read the file 
-
         // This event listener will happen when the reader has read the file
         reader.addEventListener('load', function () {
           var result = JSON.parse(reader.result); // Parse the result into an object 
           isaVis(result);
         });
-
         reader.readAsText(this.files[0]); // Read the uploaded file
-
       } else {
-
         window.alert("no file is selected to import");
-
       };
     }
 
+    function ayncChecdataplant(){
+      return new Promise(async(resolve, reject)=> {
+        await checkall()
+
+      })
+    }
 
     function bstest(testJSON) {
       loading.show();
@@ -1070,20 +1072,20 @@
 
     };
 
-    function trim_dataplant(input) {
+    // function trim_dataplant(input) {
 
-      const invinput = { "investigation": input };
-      const jsText = JSON.stringify(invinput);
-      const replacedText1 = jsText.replaceAll(/(\"value\"\:)(\"\w+\")/gm, '$1{ "@id": "", "annotationValue" :$2, "termAccession":"","termSource":"" }')
-      const replacedText2 = replacedText1.replaceAll(/(\"value\"\:)(\d+(\d+|[.])\d+)[,]/gm, '$1{ "@id": "", "annotationValue" :"$2", "termAccession":"","termSource":"" },')
+    //   const invinput = { "investigation": input };
+    //   const jsText = JSON.stringify(invinput);
+    //   const replacedText1 = jsText.replaceAll(/(\"value\"\:)(\"\w+\")/gm, '$1{ "@id": "", "annotationValue" :$2, "termAccession":"","termSource":"" }')
+    //   const replacedText2 = replacedText1.replaceAll(/(\"value\"\:)(\d+(\d+|[.])\d+)[,]/gm, '$1{ "@id": "", "annotationValue" :"$2", "termAccession":"","termSource":"" },')
 
-      const replacedText3 = replacedText2.replaceAll(/(\"value\"\:)(\d+)/gm, '$1{ "@id": "", "annotationValue" :"$2", "termAccession":"","termSource":"" }')
+    //   const replacedText3 = replacedText2.replaceAll(/(\"value\"\:)(\d+)/gm, '$1{ "@id": "", "annotationValue" :"$2", "termAccession":"","termSource":"" }')
 
-      const replacedText4 = replacedText3.replaceAll(/(\#MaterialAttribute\/)(OBI\:0100026)/gm, '$1organism/$2')
-      let finalJSON = JSON.parse(replacedText4);
-      finalJSON["investigation"]["studies"] = [finalJSON["investigation"]["studies"][0]]
-      return finalJSON;
-    }
+    //   const replacedText4 = replacedText3.replaceAll(/(\#MaterialAttribute\/)(OBI\:0100026)/gm, '$1organism/$2')
+    //   let finalJSON = JSON.parse(replacedText4);
+    //   finalJSON["investigation"]["studies"] = [finalJSON["investigation"]["studies"][0]]
+    //   return finalJSON;
+    // }
 
 
     function bsSubmit(json) {
@@ -1114,7 +1116,7 @@
 
     };
 
-    function enaModify(preJSON, otherMaterial) {
+    function enaModify(preJSON, otherMaterial="123") {
       Boolean(preJSON.investigation.studies[0].name) ? {} : preJSON.investigation.studies[0]["name"] = "Multi-omics study";
       Boolean(preJSON.investigation.studies[0].title) ? {} : preJSON.investigation.studies[0]["title"] = "Multi-omics study";
       preJSON.investigation.studies[0].protocols.push(addStudyProcessSequence("abc"));
@@ -1337,74 +1339,31 @@
       return assayProcessSequence;
     }
 
-
-
-  </script>
-  <script type="module">
-    //import { EnaBroker } from "./js/broker/ena/ena.broker.js";
-    //import { MetabolightsBroker } from "./js/broker/metabolights/metabolights.broker.js";
-    //import { BiosamplesService } from "./js/broker/biosamples/biosamples.service.js";
-    //import { BrokerType } from "./js/broker/broker.type.js";
-    //import { BrokerStatus } from "./js/broker/status.type.js";
-
-    function submit(repository, isaJson) {
-      switch (repository) {
-        case ("biosamples"):
-        bstest(isaJson);
-        case ("ENA"):
-        //enatest(isaJson);
-        case ("metabolights"):
-
-      }
-    }
-
-
     addEventListener("hashchange", (event) => {
 
       if (true) {
         softRoute();
       }
 
-    });
+      });
 
 
-     window.submitAll = async function(endRepo) {
-      let repositories = [];
-      for (const [index, element] of endRepo.entries()) {
-        repositories.push(element.id);
-        document.getElementById(`${element.id}loading`)?.addEventListener("broker", (e) => {
-          if (e.detail.status === BrokerStatus.Running) {
-            e.target.className = "spinner-border text-primary";
-          }
-          else {
-            e.target.className = "spinner-border text-primary d-none";
-          }
-        });
-      }
-      // If both Biosamples and ENA are selected, submit to Biosamples first, then submit the result to ENA
-      if (repositories.includes("biosamples") && repositories.includes("ENA")) {
-        repositories = repositories.filter(repo => !["biosamples", "ENA"].includes(repo));
-        submit("biosamples", input_json).then((updatedIsaJson) => submit("ENA", updatedIsaJson));
-      }else{
+      
+     const submitAll = async function(id, json) {
+      window.input_json =await  checkall(checklist_biosamples, json);
+      switch (id){
+        case "biosamples":
+          bstest(window.input_json);
+          break;
+        case "ena":
+          enatest(window.input_json);
+          break;
         
       }
-      // Submit to the selected repositories
-      for (const repository of repositories) {
-        console.log(repository);
-        if (window.input_json==undefined) {
-          alert("input JSON is not selected, a default testing file is generated");
-          window.input_json =await  checkall(checklist_has_key, dataplant_json);
-          submit(repository, window.input_json);
-        } else {
-          submit(repository, window.input_json);
-        };
-        
       }
-    }
-
-
 
   </script>
+
   <!-- Button trigger modal -->
   <button type="button" class="d-none btn btn-primary">
     Launch convert modal
@@ -1420,59 +1379,56 @@
         </div>
         <div class="modal-body">
           <div class="container">
-            <div class="row">
-              <div class="col">
-                <div class="row">
-                  <div class="col">
-                    <div class="form-check" id="submitRepos">
+
+            <div class="form-check" id="submitRepos">
+              
+                    <div class="form-check">
                       <input class="form-check-input" type="checkbox" value="1" id="biosamples" name="repo" checked>
                       <label class="form-check-label" for="biosamples">
                         BioSamples
 
                       </label>
 
+
                     </div>
-                  </div>
-                  <div class="col">
                     <div class="spinner-border text-primary d-none" id="biosamplesloading" role="status">
                       <span class="visually-hidden">Loading...</span>
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
+
+
+
+
                     <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="ENA" name="repo">
+                      <input class="form-check-input" type="checkbox" value="" id="ena" name="repo">
                       <label class="form-check-label" for="ENA">
                         ENA
                       </label>
                     </div>
-                  </div>
-                  <div class="col">
+
+
                     <div class="spinner-border text-primary d-none" id="ENAloading" role="status">
                       <span class="visually-hidden">Loading...</span>
                     </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
+
+
+
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" value="" id="metabolights" name="repo">
                       <label class="form-check-label" for="metabolights">
                         Metabolites
                       </label>
                     </div>
-                  </div>
-                  <div class="col">
+
+
                     <div class="spinner-border text-primary d-none" id="metabolightsloading" role="status">
                       <span class="visually-hidden">Loading...</span>
                     </div>
-                  </div>
-                </div>
+
+
               </div>
 
 
-            </div>
+            
           </div>
           <table id="validate_table" class="table table-bordered table-hover">
 
@@ -1482,7 +1438,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">download updated JSON</button>
           <button type="button" class="btn btn-primary"
-            onclick="const checkedBoxes = document.querySelectorAll('input[name=repo]:checked'); submitAll(checkedBoxes)">Submit</button>
+            onclick="Array.from(document.querySelectorAll('input[name=repo]:checked')).forEach((e)=> submitAll(e.id, window.input_json)) ">Submit</button>
         </div>
       </div>
     </div>
@@ -1512,7 +1468,7 @@
             <thead>
               <tr>
                 <th scope="col">Repositories</th>
-                <th scope="col">Status</th>
+                <th scope="col">Submission Status</th>
                 <th scope="col">Returned</th>
                 <th scope="col">Actions</th>
               </tr>
@@ -1520,11 +1476,17 @@
             <tbody>
               <tr>
                 <th scope="row">Token</th>
-                <td id="tokenStatus">not asked</td>
+                <td  id="tokenStatus">not asked</td>
                 <td>
-                  <div id="tokenText"></div>
+                  <div class="scrollTable" id="tokenText" ></div>
                 </td>
-                <td>...</td>
+                <td><button class="btn btn-primary"  disabled>Copy Token</button><button class="btn btn-primary"disabled>Download Token</button></td>
+              </tr>
+              <tr>
+                <th scope="row">BioSamples</th>
+                <td id="biosamplesStatus">not asked</td>
+                <td  ><div class="scrollTable" id="biosamplesText"> </div> </td>
+                <td><button class="btn btn-primary"  disabled>Copy Returned JSON</button><button class="btn btn-primary" disabled>Download Returned JSON</button></td>
               </tr>
               <tr>
                 <th scope="row">ENA</th>
@@ -1534,18 +1496,13 @@
                 </td>
                 <td>...</td>
               </tr>
-              <tr>
-                <th scope="row">BioSamples</th>
-                <td id="biosamplesStatus">not asked</td>
-                <td id="biosamplesText">...</td>
-                <td>...</td>
-              </tr>
+
             </tbody>
           </table>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">download files</button>
+          <button type="button d-none" class="btn btn-secondary" data-bs-dismiss="modal">download files</button>
 
         </div>
       </div>
