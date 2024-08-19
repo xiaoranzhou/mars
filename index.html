@@ -299,9 +299,9 @@
 
       <div class="center">
 
-        DataPLANT test JSON -> BioSamples, click <a href="#" onclick="submitAll('biosamples', window.dataplant_json) ">here</a>
+        DataPLANT test JSON -> BioSamples, click <a href="#" onclick="checkall(checklist_biosamples, window.dataplant_json).then(json => submitAll('biosamples', json)) ">here</a>
         <br>
-        DataHub test JSON -> BioSamples, click <a href="#" onclick="submitAll('biosamples', window.dataplan_json)">here</a> <br>
+        DataHub test JSON -> BioSamples, click <a href="#" onclick="submitAll('biosamples', window.datahub_json)">here</a> <br>
         DataPLANT test JSON -> ENA, click <a href="#"
           onclick="submitAll('ena', enaModify(dataplant_biosamples_returned_json))">here</a> <br>
         DataHub test JSON -> ENA, click <a href="#" onclick="enatest(datahub_biosamples_returned_json)">here</a>
@@ -493,7 +493,8 @@
   </div>
   <script type="text/javascript">
     var v_list, csv_content, cleanend_global, token, enaReturn = 0, biosamplesReturn = 0;
-    var input_json = dataplant_json;
+    var input_json;
+    
     var input_xlsx;
     var log_backup = console.log;
     var fs = FS.fs;
@@ -1350,13 +1351,14 @@
 
       
      const submitAll = async function(id, json) {
-      window.input_json =await  checkall(checklist_biosamples, json);
+      if (json)
+      //window.input_json =await  checkall(checklist_biosamples, json);
       switch (id){
         case "biosamples":
-          bstest(window.input_json);
+          bstest(json);
           break;
         case "ena":
-          enatest(window.input_json);
+          enatest(json);
           break;
         
       }
@@ -1370,7 +1372,7 @@
   </button>
   <!--Modal for submission-->
   <div class="modal fade" id="cModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="cModalLabel"
-    aria-hidden="true">
+    aria-hidden="true" style="z-index:1001">
     <div class="modal-dialog modal-xl modal-fullscreen-xl-down">
       <div class="modal-content">
         <div class="modal-header">
