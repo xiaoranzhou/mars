@@ -96,6 +96,7 @@
       border: 4px #4fb3d9;
       border-style: inset;
       box-shadow: 0 8px 6px -6px #4fb3d9;
+      cursor: pointer;
     }
 
     span.missingKey {
@@ -151,9 +152,9 @@
     }
 
     .scrollTable{
-      height : 100px;
+      max-height : 200px;
       overflow-y: scroll;
-      width: 40vw;
+      max-width: 80vw;
     }
   </style>
 
@@ -201,13 +202,13 @@
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button id="converter_short" class="dropdown-item d-none" onclick=''>Converter</button>
+            <button id="convertershort" class="dropdown-item d-none" onclick=''>Converter</button>
           </li>
           <li>
-            <a id="ghlink_short" class="dropdown-item" href="https://github.com/elixir-europe/MARS">GitHub</a>
+            <a id="ghlinkshort" class="dropdown-item" href="https://github.com/elixir-europe/MARS">GitHub</a>
           </li>
           <li>
-            <a id="us_short" class="dropdown-item" onclick=''>About Us</a>
+            <a id="usshort" class="dropdown-item" onclick=''>About Us</a>
           </li>
 
         </ul>
@@ -237,22 +238,16 @@
         </button>
         <ul class="dropdown-menu">
           <li>
-            <button id="converter_long" class="dropdown-item d-none" onclick=''>Converter</button>
+            <button id="converterlong" class="dropdown-item d-none" onclick=''>Converter</button>
           </li>
           <li>
-            <a id="ghlink_long" class="dropdown-item" href="https://github.com/elixir-europe/MARS">GitHub</a>
+            <a id="ghlinklong" class="dropdown-item" href="https://github.com/elixir-europe/MARS">GitHub</a>
           </li>
           <li>
-            <a id="us_long" class="dropdown-item" href=''>About Us</a>
+            <a id="aboutlong" class="dropdown-item" href=''>About</a>
           </li>
-
         </ul>
-
       </div>
-
-
-
-
     </div>
   </div>
   <div class="container">
@@ -292,23 +287,17 @@
           <br>
           <button type="submit" id="formSubmit" class="btn btn-primary" aria-describedby="tokenHelp">Collect
             Token</button>
-
         </div>
       </form>
-
-
       <div class="center">
-
         DataPLANT test JSON -> BioSamples, click <a href="#" onclick="checkall(checklist_biosamples, window.dataplant_json).then(json => submitAll('biosamples', json)) ">here</a>
         <br>
         DataHub test JSON -> BioSamples, click <a href="#" onclick="submitAll('biosamples', window.datahub_json)">here</a> <br>
         DataPLANT test JSON -> ENA, click <a href="#"
-          onclick="submitAll('ena', enaModify(dataplant_biosamples_returned_json))">here</a> <br>
+          onclick="submitAll('ena', dataplant_biosamples_returned_json)">here</a> <br>
         DataHub test JSON -> ENA, click <a href="#" onclick="enatest(datahub_biosamples_returned_json)">here</a>
         <br>
         <input class="btn btn-primary d-inline d-none" type="file" id="input_json" name="json" multiple />
-
-
         <br>
         <button class="btn btn-primary" style="display:inline" data-bs-toggle="modal" data-bs-target="#cModal"
           id="cModalButton"> Start Submissions </button>
@@ -318,10 +307,9 @@
             <span class="sr-only d-none">Loading...</span>
           </div>
         </div>
-        <div style="margin:auto;" id="xml_output">
+        <div class="m-auto" id="xml_output">
         </div>
       </div>
-
     </div>
 
     <div name="tab" class=" col-12 d-none" id="ARC2JSONTab">
@@ -336,15 +324,9 @@
               <th scope="col">Actions</th>
             </tr>
           </thead>
-
           <tbody id="datahubTable">
-
-
-
           </tbody>
         </table>
-
-
       </div>
       <div class="row m-3">
         <div class="col-5">
@@ -357,11 +339,7 @@
                 <th scope="col">Actions</th>
               </tr>
             </thead>
-
             <tbody id="importedARCTable">
-
-
-
             </tbody>
           </table>
         </div>
@@ -436,6 +414,11 @@
 
         <input type="file" id="import" multiple>
       </div>
+      <div class="text-center m-auto">
+        <button class="text btn btn-primary d-none" id="toSubmit" onclick="location.href=location.href.split('#')[0]+'#submit'" > 
+          Start Submission
+        </button>
+      </div>
       <div id="alertPlace"> </div>
       <h4> ISA JSON Visualization: </h4>
       <label for="jsonRange" class="form-label">Chose the level of details by slides (larger number = more details). The
@@ -492,14 +475,13 @@
     </div>
   </div>
   <script type="text/javascript">
-    var v_list, csv_content, cleanend_global, token, enaReturn = 0, biosamplesReturn = 0;
-    var input_json;
-    
-    var input_xlsx;
+    var v_list, csv_content, cleanend_global, token, ena_return = 0, biosamples_return = 0;
+    var input_json = "test_input";
     var log_backup = console.log;
     var fs = FS.fs;
-    var alertPlaceholder = document.getElementById('alertPlace');
+    var alert_place_holder = document.getElementById('alertPlace');
     var log_messages = [];
+    var current_file;
     var steps = [{
       title: "Converter and validators",
       content: '<p> Welcome! Our converter can convert an ISA-JSON file to multiple endpoint repositories such as ENA, Metabolites, EGA, EVA'
@@ -553,55 +535,62 @@
 
     var checklist_biosamples = [
       {
-        "description" : "investigation existance test",
+        "description" : "To check if investigation exists as a wraper",
         "key": "investigation",
         "jsonata": "$.$keys()",
         "error": "element.key + \" can not be found in\" element.jsonata",
         "fixfunction": '{"investigation":$}'
       },
       {
-        "description" : "studies existance test",
+        "description" : "To check if studies exsits",
         "key": "studies",
         "jsonata": "$.investigation.$keys()",
         "error": "element.key + \" can not be found in\" element.jsonata",
         "fixfunction": '$~>| $.investigation| {"studies":"missing_key"} |'
       },
+      // {
+      //   "description" : "To check if assays exsits",
+      //   "key": "assays",
+      //   "jsonata": "$.investigation.studies[0].$keys()",
+      //   "error": "element.key + \" can not be found in\" element.jsonata",
+      //   "fixfunction": '$assert($.investigation.studies.$keys(), "error, no assays in studies")'
+      // },
+      
+      // {
+      //   "description" : "check if organisms are added to the $.investigation.studies.materials.sources.characteristics ",
+      //   "jsonata" : '$assert($boolean($.investigation.studies.materials.sources.characteristics."@id"[$contains("organism=")].%.category."@id".$not($contains("organism"))).$not(), "error. Organism is not found" )',
+      //   "fixfunction" : '$~> |$.investigation.studies.materials.sources.characteristics."@id"[$contains("organism=")].%|   {"category":{"@id": "#MaterialAttribute/organism/OBI:0100026" }} |'
+      // },
       {
-        "description" : "evaluate the type of \"value\" key, try auto fix if the value is ",
-        "jsonata" : '$assert($.studies.**[($type(value) = "string") or ($type(value) = "number")], "error, the types of value in studies are strings or numbers")',
-        "error": "string and number values exist in the 'value' keys",
-        "fixfunction" : '($people := $.investigation.studies.people ;$c1 := $ ~> | $.investigation.studies.**[($type(value) = "string") or ($type(value) = "number") ] | { "value": {"@id": "","annotationValue": value.$string(), "termAccession":"", "termSource":"" } }| ;  $c1 ~> | $.investigation.studies| {"people" : $people} | )'
-      },
-      {
-        "description" : "check if organisms are added to the $.investigation.studies.materials.sources.characteristics ",
-        "jsonata" : '$assert ($investigation.studies.materials.sources.characteristics."@id"[$contains("organism=")].%.category."@id".$contains("organism"), "error. Organism is not found" )',
-        "fixfunction" : '$~> |$.investigation.studies.materials.sources.characteristics."@id"[$contains("organism=")].%|   {"category":{"@id": "#MaterialAttribute/organism/OBI:0100026" }} |'
-      },
-      {
-        "description" : "check if organisms are added to the ids in characteristicCategories",
-        "jsonata" : '$assert("organism" in $.**[`@id`="#MaterialAttribute/OBI:0100026"] , "error, no organisms in characteristicCategories")',
+        "description" : "To check if organisms exists in the ids in characteristicCategories",
+        "jsonata" : '$assert($boolean($.**.`@id`.$contains("#MaterialAttribute/OBI:0100026")).$not() , "error, no organisms in characteristicCategories")',
         "fixfunction" : '$~>| $.**[`@id`="#MaterialAttribute/OBI:0100026"]|  {"@id":"#MaterialAttribute/organism/OBI:0100026"}  |'
       },
       {
-        "description" : "check if there are multiple studies exist. Only the first will be slected if there is not submission specifications",
-        "jsonata" : '$assert ($count($investigation.studies)=1), "error. More than one studies are found" )',
+        "description" : "To check if there are multiple studies exist. Only the first will be slected if there is not submission specifications",
+        "jsonata" : '$assert ($count($.investigation.studies)=1, "error. More than one studies are found" )',
         "fixfunction" : '$~> |$.investigation | {"studies" : [$.studies[0]]} |'
       },
+      
       {
-        "description": "check if all investigation.studies.materials.sources.characteristics.category has correct format",
-        "jsonata" : '($p := $.investigation.studies.materials.sources.characteristics; $assert( $count($p) = $count($p.category) , "Some characteristics missed categories" ))',
-        "fixfunction" :'($dic := $.investigation.studies.materials.sources.characteristics[$lookup("value")]{ `@id` : category}; $getvalue := function($id){($dic.$lookup($id))}; $ ~> |$.investigation.studies.materials.sources.characteristics| {"category": `@id`.$getvalue($) }| )'
-      },
-      {
-        "description": "check if all investigation.studies.materials.sources.characteristics.value has correct format",
-        "jsonata" : '($p := $.investigation.studies.materials.sources.characteristics; $assert( $count($p) = $count($p.value) , "Some characteristics missed values" ))',
-        "fixfunction" :'($dic := $.investigation.studies.materials.sources.characteristics[$lookup("value")]{ `@id` : value};$getvalue := function($id){($dic.$lookup($id))}; $ ~> |$.investigation.studies.materials.sources.characteristics| {"value": `@id`.$getvalue($) }| )'
-      },
-      {
-        "description": "Check if all investigation.studies.materials.sources have at least one characteristics",
+        "description": "To check if all investigation.studies.materials.sources have at least one characteristics",
         "jsonata": '$assert($count($.investigation.studies.materials.sources[$lookup("characteristics")]) = $count($.investigation.studies.materials.sources), "Not all sources in materials have characteristics ")',
         "fixfunction": '$~>|  $.investigation.studies.materials| {"sources" : sources[$lookup("characteristics")] }  |'
 
+      },{
+        "description" : "To evaluate the type of \"value\" key, try auto fix if the value is numbers or strings",
+        "jsonata" : '$assert(($nopeople := $ ~> |$.investigation.studies[0]| {"people":[]} |; $not($exists($nopeople.investigation.studies.**[($type(value) = "string") or ($type(value) = "number")]))), "error, the strings or numbers type of value exist in the values")',
+        "error": "string and number values exist in the 'value' keys",
+        "fixfunction" : '($people := $.investigation.studies.people ;$c1 := $ ~> | $.investigation.studies.**[($type(value) = "string") or ($type(value) = "number") ] | { "value": {"@id": "","annotationValue": value.$string(), "termAccession":"", "termSource":"" } }| ;  $c1 ~> | $.investigation.studies| {"people" : $people} | )'
+      },{
+        "description": "To check if all investigation.studies.materials.sources.characteristics.category has correct format",
+        "jsonata" : '($p := $.investigation.studies.materials.sources.characteristics; $assert( $count($p) = $count($p.category) , "Some characteristics do not have categories" ))',
+        "fixfunction" :'($dic := $.investigation.studies.materials.sources.characteristics[$lookup("value")]{ `@id` : category}; $getvalue := function($id){($dic.$lookup($id))}; $ ~> |$.investigation.studies.materials.sources.characteristics| {"category": `@id`.$getvalue($) }| )'
+      },
+      {
+        "description": "To check investigation.studies.materials.sources.characteristics.value ",
+        "jsonata" : '($p := $.investigation.studies.materials.sources.characteristics[[$contains(`@id`, "Empty" ).$not()]]; $assert( $count($p) = $count($p.value) , "Some characteristics do not have values" ))',
+        "fixfunction" :'($dic := $.investigation.studies.materials.sources.characteristics[$lookup("value")]{ `@id` : value};$getvalue := function($id){($dic.$lookup($id))}; $ ~> |$.investigation.studies.materials.sources.characteristics| {"value": `@id`.$getvalue($) }| )'
       }
     ]
 
@@ -662,7 +651,7 @@
         '</div>'
       ].join('')
 
-      alertPlaceholder.append(wrapper)
+      alert_place_holder.append(wrapper)
     }
     function checkHas(key, location, error) {
       const expression = "$assert('" + key + "' in " + location + ", '" + error + "')";
@@ -673,25 +662,50 @@
       return result;
     }
     async function checkall(checklist, isa) {
-      window.alertPlaceholder.innerHTML = "";
+      window.alert_place_holder.innerHTML = "";
+      var passed = 0;
       for (const [index, element] of Object.entries(checklist,)) {
         try { if(element.key){
               await jCheck(isa, checkHas(element.key, element.jsonata, element.key + " can not be found in " + element.jsonata));
-              bootAlert(element.description + " test passed", "success")
+              passed += 1;
+              bootAlert(element.description +". [Test passed]", "success")
+
             } else {
-              await jCheck(isa, element.jsonata)
-              bootAlert(element.description + " test passed", "success")
+              await jCheck(isa, element.jsonata);
+              passed += 1;
+              bootAlert(element.description +". [Test passed]", "success")
             } 
         } catch (e) {
           try {
             isa = await jCheck(isa, element.fixfunction);
-            bootAlert(element.description + " test passed after automatic patch", "warning");
+            jCheck(isa, element.jsonata)
+            .catch(e =>{
+              bootAlert(e.message +". \n Validation failed and automatic patch is not successful. \n ", "danger");
+              return Promise.reject()
+            } 
+)
+            .then(e => 
+            {
+              passed += 1;
+              bootAlert(element.description +". \n Validation failed but automatic patching has been successfully done", "warning");
+              
+              if (passed == checklist.length){
+                document.getElementById("toSubmit").classList.remove("d-none");
+                console.log("all test passed");
+              }else{
+                document.getElementById("toSubmit").classList.add("d-none");
+              }
+            }
+              
+            );
 
           } catch (e) {
             bootAlert(e.message, "danger")
           };
         }
-      }
+
+      };
+      
       //console.log("returned isa is: " + JSON.stringify(isa));
       return isa;
     }
@@ -816,6 +830,7 @@
         let date = Date().replaceAll(" ", "_").replaceAll(":", "-").split("(")[0];
         let dir = "/" + url.split("/").slice(-1)[0] + date
         FS.mkdirSync(dir);
+        window.current_file = dir;
         const res = await git.clone({
           fs,
           http,
@@ -871,8 +886,8 @@
     }
 
     async function runARC2JSON(dir){
-
-      const ele = document.getElementById("ARCInfo");
+      try {
+        const ele = document.getElementById("ARCInfo");
           //ele.innerHTML= "Downloading ARC successful, files are "+ (FS.readdirSync(dir));
           const dec = new TextDecoder;
           var jsonText;
@@ -888,6 +903,11 @@
           await isaVis(dataplant_json);
 
           return document.getElementById("isacheckNavBtn").click()
+        
+      } catch (error) {
+        alert(error);
+      }
+      
     }
 
     function dlText(text, Name) {
@@ -904,22 +924,16 @@
     var tour = new Tour(steps); // initialize the guided tour
     //tour.show();
 
-
-
     let output_div = document.getElementById("xml_output");
     function DragAndDrop(e) {
       e.preventDefault();
-
       let ele = document.getElementById("import");
-
       ele.files = e.dataTransfer.files;
       var reader = new FileReader(); // File reader to read the file 
-
       // This event listener will happen when the reader has read the file
       reader.addEventListener('load', function () {
         var result = JSON.parse(reader.result); // Parse the result into an object 
         isaVis(result);
-
         //console.log("result is : " + result);
 
       });
@@ -987,12 +1001,6 @@
       };
     }
 
-    function ayncChecdataplant(){
-      return new Promise(async(resolve, reject)=> {
-        await checkall()
-
-      })
-    }
 
     function bstest(testJSON) {
       loading.show();
@@ -1028,7 +1036,7 @@
           console.error('Error:', error);
           // Handle errors here
         });
-
+      
     }
 
     window.addEventListener("load", (event) => {
@@ -1054,19 +1062,19 @@
             'Content-Type': 'application/json',
             'accept': '*/*'
           },
-          body: biosamplesReturn || JSON.stringify(json)
+          body: biosamples_return || JSON.stringify(json)
         })
           .then((response) => response.text())
           .then(data => {
             console.log('Success: ', data);
-            enaReturn = data;
+            ena_return = data;
             document.getElementById("enaStatus").innerText = "Returned";
-            document.getElementById("enaText").innerText = enaReturn;
+            document.getElementById("enaText").innerText = ena_return;
             document.getElementById("status_modal_button").click();
 
           })
           .catch(error => {
-            alert("ENA submission failed, error is " + error + ". Please check your username and password");
+            alert("ENA submission failed, error is " + error + ". It might be caused by the incorrect login or the incorrect data transformation, please inform the developers.");
             console.error('Error:', error);
 
           });
@@ -1104,9 +1112,9 @@
         .then((response) => response.text())
         .then(data => {
           console.log('Success: ', data);
-          biosamplesReturn = data;
+          biosamples_return = data;
           document.getElementById("biosamplesStatus").innerText = "Returned";
-          document.getElementById("biosamplesText").innerText = biosamplesReturn;
+          document.getElementById("biosamplesText").innerText = biosamples_return;
           document.getElementById("status_modal_button").click();
 
         })
@@ -1339,7 +1347,7 @@
       }
       return assayProcessSequence;
     }
-
+    
     addEventListener("hashchange", (event) => {
 
       if (true) {
@@ -1348,7 +1356,12 @@
 
       });
 
-
+      function copyById(id){
+        var copyText = document.getElementById(id).innerText;   
+        navigator.clipboard.writeText(copyText)
+       .catch(e=> alert(e) )
+       .then(e => alert("copy successful"));
+      }
       
      const submitAll = async function(id, json) {
       if (json)
@@ -1358,7 +1371,7 @@
           bstest(json);
           break;
         case "ena":
-          enatest(json);
+          enatest(enaModify(json));
           break;
         
       }
@@ -1488,7 +1501,8 @@
                 <th scope="row">BioSamples</th>
                 <td id="biosamplesStatus">not asked</td>
                 <td  ><div class="scrollTable" id="biosamplesText"> </div> </td>
-                <td><button class="btn btn-primary"  disabled>Copy Returned JSON</button><button class="btn btn-primary" disabled>Download Returned JSON</button></td>
+                <td><button class="btn btn-primary" id="copyreturnedjson" onclick="copyById('biosamplesText')" >Copy Returned JSON</button>
+                  <button class="btn btn-primary" id="downloadreturnedjson" onclick="dlText(document.getElementById('biosamplesText').innerText, 'biosamples_returned_'+window.current_file+'.json' )" >Download Returned JSON</button></td>
               </tr>
               <tr>
                 <th scope="row">ENA</th>
