@@ -263,7 +263,7 @@
       </a>
     </div>
 
-    <div name="tab" class="col-12 d-none" id="submissionTab">
+    <div name="tab" class="row justify-content-center d-none" id="submissionTab">
       <h1 class="center">MARS: Multi-omics Adapter for Repository Submissions </h1>
 
 
@@ -289,27 +289,50 @@
             Token</button>
         </div>
       </form>
-      <div class="center">
-        DataPLANT test JSON -> BioSamples, click <a href="#" onclick="checkall(checklist_biosamples, window.dataplant_json).then(json => submitAll('biosamples', json)) ">here</a>
-        <br>
-        DataHub test JSON -> BioSamples, click <a href="#" onclick="submitAll('biosamples', window.datahub_json)">here</a> <br>
-        DataPLANT test JSON -> ENA, click <a href="#"
-          onclick="submitAll('ena', dataplant_biosamples_returned_json)">here</a> <br>
-        DataHub test JSON -> ENA, click <a href="#" onclick="enatest(datahub_biosamples_returned_json)">here</a>
-        <br>
-        <input class="btn btn-primary d-inline d-none" type="file" id="input_json" name="json" multiple />
-        <br>
-        <button class="btn btn-primary" style="display:inline" data-bs-toggle="modal" data-bs-target="#cModal"
-          id="cModalButton"> Start Submissions </button>
-        <div class="d-flex justify-content-center d-none" id="waiting">
-          <div class="spinner-grow btn-primary" style="width: 3rem; height: 3rem;" role="status">
-            <br>
-            <span class="sr-only d-none">Loading...</span>
+      <div class="col-6 m-auto">
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#exampleTest" aria-expanded="true" aria-controls="exampleTest">
+              Use prepared ISA-JSON example to test the basic functions
+            </button>
+          </h2>
+          <div id="exampleTest" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <div class="center">
+                DataPLANT test JSON -> BioSamples, click <a href="#" onclick="checkall(checklist_biosamples, window.dataplant_json).then(json => submitAll('biosamples', json)) ">here</a>
+                <br>
+                DataHub test JSON -> BioSamples, click <a href="#" onclick="submitAll('biosamples', window.datahub_json)">here</a> <br>
+                DataPLANT test JSON -> ENA, click <a href="#"
+                  onclick="submitAll('ena', dataplant_biosamples_returned_json)">here</a> <br>
+                DataHub test JSON -> ENA, click <a href="#" onclick="enatest(datahub_biosamples_returned_json)">here</a>
+                <br>
+                <input class="btn btn-primary d-inline d-none" type="file" id="input_json" name="json" multiple />
+                <br>
+
+                <div class="d-flex justify-content-center d-none" id="waiting">
+                  <div class="spinner-grow btn-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <br>
+                    <span class="sr-only d-none">Loading...</span>
+                  </div>
+                </div>
+                <div class="m-auto" id="xml_output">
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="m-auto" id="xml_output">
-        </div>
+
       </div>
+      
+      </div>
+      <div class="row justify-content-center m-3">
+        <div class="col-2">
+        <button class="btn btn-primary" style="display:inline" data-bs-toggle="modal" data-bs-target="#cModal"
+        id="cModalButton"> Start Submissions </button>
+      </div>
+      </div>
+      
     </div>
 
     <div name="tab" class=" col-12 d-none" id="ARC2JSONTab">
@@ -556,11 +579,11 @@
       //   "fixfunction": '$assert($.investigation.studies.$keys(), "error, no assays in studies")'
       // },
       
-      // {
-      //   "description" : "check if organisms are added to the $.investigation.studies.materials.sources.characteristics ",
-      //   "jsonata" : '$assert($boolean($.investigation.studies.materials.sources.characteristics."@id"[$contains("organism=")].%.category."@id".$not($contains("organism"))).$not(), "error. Organism is not found" )',
-      //   "fixfunction" : '$~> |$.investigation.studies.materials.sources.characteristics."@id"[$contains("organism=")].%|   {"category":{"@id": "#MaterialAttribute/organism/OBI:0100026" }} |'
-      // },
+      {
+        "description" : "check if organisms are added to the $.investigation.studies.materials.sources.characteristics ",
+        "jsonata" : '$assert($boolean($.investigation.studies.materials.sources.characteristics."@id"[$contains("organism=")].%.category."@id".$not($contains("organism"))).$not(), "error. Organism is not found" )',
+        "fixfunction" : '$~> |$.investigation.studies.materials.sources.characteristics."@id"[$contains("organism=")].%|   {"category":{"@id": "#MaterialAttribute/organism/OBI:0100026" }} |'
+      },
       {
         "description" : "To check if organisms exists in the ids in characteristicCategories",
         "jsonata" : '$assert($boolean($.**.`@id`.$contains("#MaterialAttribute/OBI:0100026")).$not() , "error, no organisms in characteristicCategories")',
@@ -606,7 +629,7 @@
     ]
     const loading = new bootstrap.Modal(document.getElementById('loadingModal'), {
       keyboard: true, show: false
-    })
+    });
     function setRange(ele) {
       loading.show()
       const order = Number(ele.value);
@@ -1062,7 +1085,7 @@
             'Content-Type': 'application/json',
             'accept': '*/*'
           },
-          body: biosamples_return || JSON.stringify(json)
+          body: JSON.stringify(json)
         })
           .then((response) => response.text())
           .then(data => {
@@ -1112,9 +1135,9 @@
         .then((response) => response.text())
         .then(data => {
           console.log('Success: ', data);
-          biosamples_return = data;
+          biosamples_return = JSON.parse(data);
           document.getElementById("biosamplesStatus").innerText = "Returned";
-          document.getElementById("biosamplesText").innerText = biosamples_return;
+          document.getElementById("biosamplesText").innerText = JSON.stringify(biosamples_return);
           document.getElementById("status_modal_button").click();
 
         })
