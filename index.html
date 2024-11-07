@@ -300,12 +300,16 @@
           <div id="exampleTest" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
             <div class="accordion-body">
               <div class="center">
-                DataPLANT test JSON -> BioSamples, click <a href="#" onclick="checkall(checklist_biosamples, window.dataplant_json).then(json => submitAll('biosamples', json)) ">here</a>
+                DataPLANT -> BioSamples, click <a href="#" onclick="checkall(checklist_biosamples, window.dataplant_json).then(json => submitAll('biosamples', json)) ">here</a>
                 <br>
-                DataHub test JSON -> BioSamples, click <a href="#" onclick="submitAll('biosamples', window.datahub_json)">here</a> <br>
-                DataPLANT test JSON -> ENA, click <a href="#"
-                  onclick="submitAll('ena', dataplant_biosamples_returned_json)">here</a> <br>
-                DataHub test JSON -> ENA, click <a href="#" onclick="enatest(datahub_biosamples_returned_json)">here</a>
+                DataPLANT -> BioSamples, click <a href="#" onclick="checkall(checklist_biosamples, window.dataplant_json).then(json => submitAll('biosamples', json)) ">here</a>
+                <br>
+                DataPLANT -> ENA, click <a href="#"
+                onclick="submitAll('ena', dataplant_biosamples_returned_json)">here</a> <br>
+
+                DataHub -> BioSamples, click <a href="#" onclick="submitAll('biosamples', window.datahub_json)">here</a> <br>
+               
+                DataHub -> ENA, click <a href="#" onclick="enatest(datahub_biosamples_returned_json)">here</a>
                 <br>
                 <input class="btn btn-primary d-inline d-none" type="file" id="input_json" name="json" multiple />
                 <br>
@@ -1077,7 +1081,7 @@
 
     function enaSubmit(name, password, json) {
       json =
-        fetch('https://ena.cplantbox.com/isaena/submit?webinUserName=' + name + '&webinPassword=' + password, {
+        fetch('https://ena.dataplan.top/isaena/submit?webinUserName=' + name + '&webinPassword=' + password, {
           method: 'POST',
           //mode: 'cors',
           headers: {
@@ -1122,7 +1126,7 @@
 
     function bsSubmit(json) {
 
-      const fulltoken = "https://biosamples.cplantbox.com/isabiosamples/submit?webinjwt=" + token;
+      const fulltoken = "https://biosamples.dataplan.top/isabiosamples/submit?webinjwt=" + token;
       fetch(fulltoken, {
         method: 'POST',
         //mode: 'no-cors',
